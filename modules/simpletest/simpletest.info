@@ -50,7 +50,7 @@ files[] = tests/upgrade/upgrade.upload.test
 files[] = tests/upgrade/upgrade.user.test
 
 ; Information added by drupal.org packaging script on 2012-02-01
-version = "7.11"
+version = "7.12"
 project = "drupal"
-datestamp = "1328134274"
+datestamp = "1328134560"
 
