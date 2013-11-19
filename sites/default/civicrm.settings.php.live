@@ -59,7 +59,7 @@ define( 'CIVICRM_UF'               , 'Drupal'        );
  * Datasource (DSN) format:
  *      define( 'CIVICRM_UF_DSN', 'mysql://cms_db_username:cms_db_password@db_server/cms_database?new_link=true');
  */
-define( 'CIVICRM_UF_DSN'           , 'mysql://commons_drupal:j45WdPZz2QgrrdVvFhYQRVM8@localhost/commons_drupal_prod?new_link=true' );
+define( 'CIVICRM_UF_DSN'           , 'mysql://commons_civi:j45WdPZz2QgrrdVvFhYQRVM8@localhost/commons_civi_prod?new_link=true' );
 
 /**
  * CiviCRM Database Settings
@@ -80,7 +80,7 @@ define( 'CIVICRM_UF_DSN'           , 'mysql://commons_drupal:j45WdPZz2QgrrdVvFhY
  *      define( 'CIVICRM_DSN'         , 'mysql://civicrm:YOUR_PASSWORD@localhost/civicrm?new_link=true' );
  *
  */
-define( 'CIVICRM_DSN'          , 'mysql://commons_drupal:j45WdPZz2QgrrdVvFhYQRVM8@localhost/commons_drupal_prod?new_link=true' );
+define( 'CIVICRM_DSN'          , 'mysql://commons_civi:j45WdPZz2QgrrdVvFhYQRVM8@localhost/commons_civi_prod?new_link=true' );
 
 /**
  * CiviCRM Logging Database

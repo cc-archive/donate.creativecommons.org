@@ -215,8 +215,8 @@ $databases = array (
   array (
     'default' => 
     array (
-      'database' => 'commons_drupal_prod',
-      'username' => 'commons_drupal',
+      'database' => 'commons_civi_prod',
+      'username' => 'commons_civi',
       'password' => 'j45WdPZz2QgrrdVvFhYQRVM8',
       'host' => 'localhost',
       'port' => '',
