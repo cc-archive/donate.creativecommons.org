@@ -1,0 +1,93 @@
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+body.one-sidebar.sidebar-first.page-civicrm-contribute #sidebar-first {
+  width: 440px;
+}
+body.one-sidebar.sidebar-first.page-civicrm-contribute #content {
+  width: 520px;
+}
+#header {
+  border-bottom: solid #777 1px;
+}
+.region-header {
+  float: left;
+  margin: 5px 5px 0px 5px;
+}
+.without-secondary-menu .region-header {
+  margin-top: 5px;
+}
+.region-header #block-block-1 p {
+  margin-bottom: 0;
+}
+.breadcrumb {
+  display: none;
+}
+h1#page-title {
+  color: #404040;
+  font-weight: bold;
+}
+#crm-container .crm-section .label {
+  width: 25%;
+}
+#crm-container .crm-section .content {
+  margin-left: 28%;
+}
+#crm-container .crm-section.contribution_amount-section .label,
+#crm-container .crm-section.is_recur-section .label {
+  width: 0;
+}
+#crm-container .crm-section.contribution_amount-section .content,
+#crm-container .crm-section.is_recur-section .content {
+  margin-left: 5%;
+}
+#crm-container .crm-section.other_amount-section .content {
+  margin-left: 9.5%;
+}
+#crm-container .contribution_amount-content .price-set-option-content label {
+  padding-left: 10px;
+  font-size: 26px;
+  color: #627e37;
+  font-weight: bold;
+}
+#crm-container .contribution_amount-content .price-set-option-content input.form-radio {
+  vertical-align: top;
+}
+#crm-container .contribution_amount-content .price-set-row {
+  margin-bottom: 20px;
+}
+#recur_installments_num {
+  display: none;
+}
+.is_recur-section p .description {
+  display: none;
+}
+#crm-container .other_amount-section input {
+  margin: -20px 0 0 0;
+  width: 60px;
+}
+.other_amount-section .label {
+  display: none;
+}
+.block h2 {
+  font-weight: bold;
+  font-size: 20px;
+}
+#footer {
+  border-top: 0;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 1);
+}
+
+#footer-wrapper a,
+#footer-wrapper a:hover
+#footer-wrapper a:link
+#footer-wrapper a:visited {
+  color: rgba(255, 255, 255, 1);
+}
+#footer #block-block-6 {
+  float: right;
+  width: 200px;
+  font-size: 12px;
+  margin-top: -50px;
+}
