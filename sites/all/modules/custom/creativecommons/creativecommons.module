@@ -1,0 +1,11 @@
+<?php
+
+/**
+ * Implements hook_civicrm_buildForm()
+ */
+function creativecommons_civicrm_buildForm($formName, &$form) {
+  if ($formName == 'CRM_Contribute_Form_Contribution_Main') {
+    $defaults['custom_12'] = '1';
+    $form->setDefaults( $defaults );
+  }
+}
