@@ -5,6 +5,18 @@
  */
 function creativecommons_civicrm_buildForm($formName, &$form) {
   if ($formName == 'CRM_Contribute_Form_Contribution_Main') {
+    // Set Contributor Source field from url parameters
+    if (isset($form->_fields['custom_42'])) {
+      $params = drupal_get_query_parameters();
+      if (isset($params['utm_campaign'])) {
+        $contributor_source = $params['utm_campaign'];
+        if (isset($params['utm_source'])) {
+          $contributor_source .= '_' . $params['utm_source'];
+        }
+        $defaults['custom_42'] = $contributor_source;
+      }
+    }
+    // Set Supporter List Opt-in field to checked by default
     $defaults['custom_12'] = '1';
     $form->setDefaults( $defaults );
   }

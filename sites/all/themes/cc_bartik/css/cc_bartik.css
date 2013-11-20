@@ -1,10 +1,10 @@
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
-body.one-sidebar.sidebar-first.page-civicrm-contribute #sidebar-first {
+body.one-sidebar.sidebar-first.page-civicrm-contribute-transact #sidebar-first {
   width: 440px;
 }
-body.one-sidebar.sidebar-first.page-civicrm-contribute #content {
+body.one-sidebar.sidebar-first.page-civicrm-contribute-transact #content {
   width: 520px;
 }
 #header {
@@ -26,6 +26,9 @@ body.one-sidebar.sidebar-first.page-civicrm-contribute #content {
 h1#page-title {
   color: #404040;
   font-weight: bold;
+}
+#crm-container .custom_42-section {
+  display: none;
 }
 #crm-container .crm-section .label {
   width: 25%;
