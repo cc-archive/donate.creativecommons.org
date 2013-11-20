@@ -41,7 +41,8 @@ h1#page-title {
   width: 0;
 }
 #crm-container .crm-section.contribution_amount-section .content,
-#crm-container .crm-section.is_recur-section .content {
+#crm-container .crm-section.is_recur-section .content,
+#crm-container .crm-section.custom_12-section .content {
   margin-left: 5%;
 }
 #crm-container .crm-section.other_amount-section .content {
@@ -69,6 +70,15 @@ h1#page-title {
   margin: -20px 0 0 0;
   width: 60px;
 }
+#crm-container .group-section .description {
+  color: #3b3b3b;
+  font-size: 1em;
+}
+#crm-container .group-section .content {
+  margin-top: 20px;
+  margin-left: 5%;
+}
+
 .other_amount-section .label {
   display: none;
 }
