@@ -189,10 +189,13 @@ class backup_migrate_files_destination_filesource extends backup_migrate_destina
     $include_path_old = set_include_path($includes_directory . ';' . get_include_path());
 
     // Check if PEAR.php is present in a non-fatal way and error gracefully if it isn't.
+
+    // Disabling PEAR check
     /*include_once 'PEAR.php';
     if (!class_exists('PEAR')) {
       _backup_migrate_message('PEAR is not installed correctly. See the README.txt file in the backup_migrate_files module directory for help.', array(), 'error');
       $result = false;
+<<<<<<< HEAD
     }
     */
 
