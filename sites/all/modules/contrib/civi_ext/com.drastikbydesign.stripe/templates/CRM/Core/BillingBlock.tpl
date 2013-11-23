@@ -55,7 +55,8 @@
             // Intercept form submission.
             cj("form.stripe-payment-form").submit(function(event) {
               // Disable the submit button to prevent repeated clicks.
-              cj(this).attr("disabled", "disabled");
+              cj("form.stripe-payment-form input.form-submit").attr("disabled", "disabled");
+              cj("form.stripe-payment-form input.form-submit").parent().after("<span id='waiting'><img src='{/literal}{$config->resourceBase}{literal}i/loading.gif' />Please wait...</span>");
               if (cj(this).find("#priceset input[type='radio']:checked").data('amount') == 0) {
                 return true;
               }
@@ -102,6 +103,7 @@
               }, 500);
 
               cj('form.stripe-payment-form input.form-submit').removeAttr("disabled");
+              cj('form.stripe-payment-form #waiting').remove();
             }
             else {
               var token = response['id'];
