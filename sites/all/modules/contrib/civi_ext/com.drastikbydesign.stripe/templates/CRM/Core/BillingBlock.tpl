@@ -29,7 +29,7 @@
     cj(function() {
       cj(document).ready(function() {
         if (cj(this).find(".crm-section.payment_processor-section").length > 0) {
-          cj('#crm-container>form').removeClass('stripe-payment-form');
+          cj('#crm-container>form').unbind('submit');
         }
       });
     });
@@ -53,22 +53,21 @@
              */
             cj('#crm-container>form').addClass('stripe-payment-form');
             // Intercept form submission.
-            cj("form.stripe-payment-form input.form-submit").click(function(event) {
+            cj("form.stripe-payment-form").submit(function(event) {
               // Disable the submit button to prevent repeated clicks.
               cj(this).attr("disabled", "disabled");
-              var payment_form = cj("form.stripe-payment-form");
-              if (payment_form.find("#priceset input[type='radio']:checked").data('amount') == 0) {
+              if (cj(this).find("#priceset input[type='radio']:checked").data('amount') == 0) {
                 return true;
               }
 
               // Handle changes introduced in CiviCRM 4.3.
-              if (payment_form.find('#credit_card_exp_date_M').length > 0) {
-                var cc_month = payment_form.find('#credit_card_exp_date_M').val();
-                var cc_year = payment_form.find('#credit_card_exp_date_Y').val();
+              if (cj(this).find('#credit_card_exp_date_M').length > 0) {
+                var cc_month = cj(this).find('#credit_card_exp_date_M').val();
+                var cc_year = cj(this).find('#credit_card_exp_date_Y').val();
               }
               else {
-                var cc_month = payment_form.find('#credit_card_exp_date\\[M\\]').val();
-                var cc_year = payment_form.find('#credit_card_exp_date\\[Y\\]').val();
+                var cc_month = cj(this).find('#credit_card_exp_date\\[M\\]').val();
+                var cc_year = cj(this).find('#credit_card_exp_date\\[Y\\]').val();
               }
 
               Stripe.createToken({
@@ -81,7 +80,7 @@
               }, stripeResponseHandler);
 
              // Prevent the form from submitting with the default action.
-             cj(this).preventDefault();
+             return false;
             });
           });
           // Response from Stripe.createToken.
