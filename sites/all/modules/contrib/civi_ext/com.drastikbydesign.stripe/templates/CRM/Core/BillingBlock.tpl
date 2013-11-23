@@ -98,6 +98,9 @@
                     +'<li>Error: ' + response.error.message + '</li>'
                   +'</ul>'
                 +'</div>');
+              cj("html, body").animate({
+                scrollTop: cj(".messages.crm-error.stripe-message").offset().top
+              }, 500);
 
               cj('form.stripe-payment-form input.form-submit').removeAttr("disabled");
             }
