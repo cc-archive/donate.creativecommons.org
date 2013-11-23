@@ -24,6 +24,17 @@
  +--------------------------------------------------------------------+
 *}
 {crmRegion name="billing-block"}
+<script type="text/javascript">
+  {literal}
+    cj(function() {
+      cj(document).ready(function() {
+        if (cj(this).find(".crm-section.payment_processor-section").length > 0) {
+          cj('#crm-container>form').removeClass('stripe-payment-form');
+        }
+      });
+    });
+  {/literal}
+</script>
 {if $form.credit_card_number or $form.bank_account_number}
 <!-- START Stripe -->
   {if $paymentProcessor.payment_processor_type == 'Stripe'}
@@ -41,29 +52,23 @@
              * (Contribution / Event / etc).
              */
             cj('#crm-container>form').addClass('stripe-payment-form');
-            cj('form.stripe-payment-form').unbind('submit');
             // Intercept form submission.
-            cj("form.stripe-payment-form").submit(function(event) {
+            cj("form.stripe-payment-form input.form-submit").click(function(event) {
               // Disable the submit button to prevent repeated clicks.
-              cj('form.stripe-payment-form input.form-submit').attr("disabled", "disabled");
-              if (cj(this).find("#priceset input[type='radio']:checked").data('amount') == 0) {
+              cj(this).attr("disabled", "disabled");
+              var payment_form = cj("form.stripe-payment-form");
+              if (payment_form.find("#priceset input[type='radio']:checked").data('amount') == 0) {
                 return true;
-              }
-              // Handle multiple payment options and Stripe not being chosen.
-              if (cj(this).find(".crm-section.payment_processor-section").length > 0) {
-                if (!(cj(this).find('input[name="hidden_processor"]').length > 0)) {
-                  return true;
-                }
               }
 
               // Handle changes introduced in CiviCRM 4.3.
-              if (cj(this).find('#credit_card_exp_date_M').length > 0) {
-                var cc_month = cj(this).find('#credit_card_exp_date_M').val();
-                var cc_year = cj(this).find('#credit_card_exp_date_Y').val();
+              if (payment_form.find('#credit_card_exp_date_M').length > 0) {
+                var cc_month = payment_form.find('#credit_card_exp_date_M').val();
+                var cc_year = payment_form.find('#credit_card_exp_date_Y').val();
               }
               else {
-                var cc_month = cj(this).find('#credit_card_exp_date\\[M\\]').val();
-                var cc_year = cj(this).find('#credit_card_exp_date\\[Y\\]').val();
+                var cc_month = payment_form.find('#credit_card_exp_date\\[M\\]').val();
+                var cc_year = payment_form.find('#credit_card_exp_date\\[Y\\]').val();
               }
 
               Stripe.createToken({
@@ -76,7 +81,7 @@
               }, stripeResponseHandler);
 
              // Prevent the form from submitting with the default action.
-              return false;
+             cj(this).preventDefault();
             });
           });
           // Response from Stripe.createToken.
