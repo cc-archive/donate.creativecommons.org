@@ -715,7 +715,7 @@ function drupal_settings_initialize() {
   if (file_exists(DRUPAL_ROOT . '/' . conf_path() . '/settings.php')) {
     include_once DRUPAL_ROOT . '/' . conf_path() . '/settings.php';
   }
-  $is_https = isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on';
+  $is_https = (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && strtolower($_SERVER['HTTP_X_FORWARDED_PROTO']) == 'https');
 
   if (isset($base_url)) {
     // Parse fixed base URL from settings.php.
@@ -730,7 +730,12 @@ function drupal_settings_initialize() {
   else {
     // Create base URL.
     $http_protocol = $is_https ? 'https' : 'http';
-    $base_root = $http_protocol . '://' . $_SERVER['HTTP_HOST'];
+    if (isset($_SERVER['HTTP_X_FORWARDED_HOST'])) {
+      $host = $_SERVER['HTTP_X_FORWARDED_HOST'];
+    } else {
+      $host = $_SERVER['HTTP_HOST'];
+    }
+    $base_root = $http_protocol . '://' . $host;
 
     $base_url = $base_root;
 
