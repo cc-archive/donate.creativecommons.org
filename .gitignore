@@ -7,4 +7,5 @@ sites/*/files
 sites/*/private
 
 # Ignore CiviCRM Extensions cache
-sites/all/modules/contrib/civi_ext/cache/ 
+sites/all/modules/contrib/civi_ext/cache
+sites/all/modules/contrib/civi_ext/tmp
