@@ -107,10 +107,8 @@ function stripe_civicrm_buildForm($formName, &$form) {
   if (isset($form->_paymentProcessor['payment_processor_type'])
     && $form->_paymentProcessor['payment_processor_type'] == 'Stripe') {
     if (!stristr($formName, '_Confirm') && !stristr($formName, '_ThankYou')) {
-      if (empty($_GET['type'])) {
-        if (!isset($form->_elementIndex['stripe_token'])) {
-          $form->addElement('hidden', 'stripe_token', NULL, array('id'=> 'stripe-token'));
-        }
+      if (!isset($form->_elementIndex['stripe_token'])) {
+        $form->addElement('hidden', 'stripe_token', NULL, array('id'=> 'stripe-token'));
       }
     }
   }
