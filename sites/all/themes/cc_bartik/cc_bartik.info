@@ -8,6 +8,7 @@ base theme = bartik
 
 stylesheets[all][] = css/colors.css
 stylesheets[all][] = css/cc_bartik.css
+scripts[] = js/cc_bartik.js
 
 regions[header] = Header
 regions[help] = Help
@@ -20,7 +21,7 @@ regions[content] = Content
 regions[sidebar_first] = Sidebar first
 regions[sidebar_second] = Sidebar second
 
-regions[triptych_first] = Triptych first
+regions[triptych_first]ORGANIZATIONTriptych first
 regions[triptych_middle] = Triptych middle
 regions[triptych_last] = Triptych last
 
