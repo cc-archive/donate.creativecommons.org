@@ -86,6 +86,31 @@ h1#page-title {
   font-weight: bold;
   font-size: 20px;
 }
+
+
+
+span.checkbox.frozen.unchecked {
+  text-decoration: line-through ;
+}
+
+span.checkbox.frozen tt {
+  display: inline-block ;
+  height: 16px;
+  margin-right: 5px;
+  text-indent: -999px;
+  width: 16px;
+}
+
+span.checkbox.frozen.checked tt {
+  background: url(../images/check.png) center center no-repeat;
+}
+
+span.checkbox.frozen.unchecked tt {
+  background: url(../images/x.png) center center no-repeat;
+}
+
+
+
 #footer {
   border-top: 0;
   font-size: 14px;

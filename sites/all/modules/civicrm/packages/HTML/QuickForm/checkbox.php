@@ -143,8 +143,12 @@ class HTML_QuickForm_checkbox extends HTML_QuickForm_input
             $label = '<label for="' . $this->getAttribute('id') . '">' . $this->_text . '</label>';
         }
 
+        $classes = 'checkbox' ;
+        $classes .= $this->getChecked() ? ' checked' : ' unchecked' ;
+        $classes .= $this->_flagFrozen ? ' frozen' : '' ;
+
         unset( $attributes['skipLabel'] );
-        return HTML_QuickForm_input::toHtml() . $label;
+        return "<span class='{$classes}'>" . HTML_QuickForm_input::toHtml() . $label . "</span>" ;
     } //end func toHtml
     
     // }}}

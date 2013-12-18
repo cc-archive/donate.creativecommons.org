@@ -224,8 +224,8 @@ class HTML_QuickForm_advcheckbox extends HTML_QuickForm_checkbox
     */
     function getFrozenHtml()
     {
-        return ($this->getChecked()? '<tt>[x]</tt>': '<tt>[ ]</tt>') .
-               $this->_getPersistantData();
+        return ($this->getChecked()? '<tt class="frozen checked">[x]</tt>': '<tt class="frozen unchecked">[ ]</tt>') .
+               $this->_getPersistantData() ;
     }
 
     // }}}
