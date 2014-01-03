@@ -77,6 +77,11 @@ class CRM_Core_Payment_Stripe extends CRM_Core_Payment {
     }
   }
 
+  function logStripeException($op, $exception) {
+    $body = $exception->getJsonBody();
+    CRM_Core_Error::debug_log_message("stripe_error $op: " . print_r($body, TRUE));
+  }
+
   /**
    * Run Stripe calls through this to catch exceptions gracefully.
    * @param  string $op
@@ -113,6 +118,7 @@ class CRM_Core_Payment_Stripe extends CRM_Core_Payment {
       }
     }
     catch(Stripe_CardError $e) {
+      $this->logStripeException($op, $e);
       $error_message = '';
       // Since it's a decline, Stripe_CardError will be caught
       $body = $e->getJsonBody();
@@ -139,20 +145,25 @@ class CRM_Core_Payment_Stripe extends CRM_Core_Payment {
         <br /> $error_message", $error_url);
     }
     catch (Stripe_InvalidRequestError $e) {
+      $this->logStripeException($op, $e);
       // Invalid parameters were supplied to Stripe's API
     }
     catch (Stripe_AuthenticationError $e) {
+      $this->logStripeException($op, $e);
       // Authentication with Stripe's API failed
       // (maybe you changed API keys recently)
     }
     catch (Stripe_ApiConnectionError $e) {
+      $this->logStripeException($op, $e);
       // Network communication with Stripe failed
     }
     catch (Stripe_Error $e) {
+      $this->logStripeException($op, $e);
       // Display a very generic error to the user, and maybe send
       // yourself an email
     }
     catch (Exception $e) {
+      CRM_Core_Error::debug_log_message("stripe_error $op: " . $e->getMessage());
       // Something else happened, completely unrelated to Stripe
       $error_message = '';
       // Since it's a decline, Stripe_CardError will be caught
