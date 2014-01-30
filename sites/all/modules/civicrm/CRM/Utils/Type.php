@@ -243,6 +243,16 @@ class CRM_Utils_Type {
    */
   public static function validate($data, $type, $abort = TRUE, $name = 'One of parameters ') {
     switch ($type) {
+      case 'IntegerOrNull':
+     	if ($data === NULL or $data === 'NULL') {
+	  return 'NULL';
+	} else {
+	  if (CRM_Utils_Rule::integer($data)) {
+	    return $data;
+	  }
+	}
+	break;
+
       case 'Integer':
       case 'Int':
         if (CRM_Utils_Rule::integer($data)) {

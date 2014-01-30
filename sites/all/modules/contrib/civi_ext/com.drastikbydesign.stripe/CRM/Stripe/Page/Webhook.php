@@ -127,7 +127,7 @@ class CRM_Stripe_Page_Webhook extends CRM_Core_Page {
           10 => array($recur_contrib_query->currency, 'String'),
           11 => array($recur_contrib_query->id, 'Integer'),
           12 => array($recur_contrib_query->is_test, 'Integer'),
-          13 => array($recur_contrib_query->campaign_id, 'Integer'),
+          13 => array($recur_contrib_query->campaign_id, 'IntegerOrNull'),
         );
         CRM_Core_DAO::executeQuery("INSERT INTO civicrm_contribution (
           contact_id, {$financial_field}, payment_instrument_id, receive_date,
