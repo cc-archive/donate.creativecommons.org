@@ -112,6 +112,7 @@ class CRM_Admin_Page_Admin extends CRM_Core_Page {
     $this->assign('newVersion', $versionCheck->newerVersion());
     $this->assign('localVersion', $versionCheck->localVersion);
     $this->assign('adminPanel', $adminPanel);
+
     $this->_showHide->addToTemplate();
     return parent::run();
   }
