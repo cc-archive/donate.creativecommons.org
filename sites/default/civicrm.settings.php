@@ -133,9 +133,6 @@ define('CIVICRM_LOGGING_DSN', CIVICRM_DSN);
  *
  */
 
-global $civicrm_root;
-
-$civicrm_root = "{$drupal_root}/sites/all/modules/civicrm";
 define( 'CIVICRM_TEMPLATE_COMPILEDIR', "{$drupal_root}/sites/default/files/civicrm/templates_c/" );
 
 
@@ -308,3 +305,7 @@ if ($memLimit >= 0 and $memLimit < 134217728) {
 require_once 'CRM/Core/ClassLoader.php';
 CRM_Core_ClassLoader::singleton()->register();
 
+global $civicrm_setting;
+$civicrm_setting['Directory Preferences']['customTemplateDir'] = "{$drupal_root}/sites/all/civicrm_custom/templates/";
+$civicrm_setting['Directory Preferences']['customPHPPathDir'] = "{$drupal_root}/sites/all/civicrm_custom/code/";
+$civicrm_setting['Directory Preferences']['extensionsDir'] = "{$drupal_root}/sites/all/civicrm_ext/";

@@ -43,6 +43,9 @@ if ($indicator_name == 'STAG') {
 $conf['environment_indicator_overwrite'] = $indicator_enabled;
 $conf['environment_indicator_overwritten_name'] = "{$indicator_name} SERVER";
 $conf['environment_indicator_overwritten_color'] = '#770000';
+// Set the CiviCRM root directory
+global $civicrm_root;
+$civicrm_root = "{$drupal_root}/sites/all/modules/civicrm";
 // Include the settings.local.php file.
 if (file_exists($settings_path)) {
   require($settings_path);
