@@ -132,7 +132,7 @@ define('CIVICRM_LOGGING_DSN', CIVICRM_DSN);
  *      define( 'CIVICRM_TEMPLATE_COMPILEDIR', '/var/www/htdocs/wordpress/wp-content/plugins/files/civicrm/templates_c/' );
  *
  */
-
+global $civicrm_root;
 define( 'CIVICRM_TEMPLATE_COMPILEDIR', "{$drupal_root}/sites/default/files/civicrm/templates_c/" );
 
 
