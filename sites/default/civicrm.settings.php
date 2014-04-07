@@ -133,6 +133,7 @@ define('CIVICRM_LOGGING_DSN', CIVICRM_DSN);
  *
  */
 global $civicrm_root;
+$civicrm_root = $civicrm_root_path;
 define( 'CIVICRM_TEMPLATE_COMPILEDIR', "{$drupal_root}/sites/default/files/civicrm/templates_c/" );
 
 
