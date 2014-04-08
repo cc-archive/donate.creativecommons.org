@@ -162,7 +162,7 @@ define( 'CIVICRM_TEMPLATE_COMPILEDIR', "{$drupal_root}/sites/default/files/civic
  *      define( 'CIVICRM_UF_BASEURL' , 'http://www.example.com/joomla/' );
  *
  */
-define( 'CIVICRM_UF_BASEURL'      , "http{$_ENV['protossl']}://{$_SERVER['HTTP_HOST']}" );
+define( 'CIVICRM_UF_BASEURL'      , "http{$_SERVER['protossl']}://{$_SERVER['HTTP_HOST']}" );
 
 /*
  * If you are using any CiviCRM script in the bin directory that
