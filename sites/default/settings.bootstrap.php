@@ -8,6 +8,8 @@
 $settings_dir = __DIR__;
 $settings_path = "{$settings_dir}/settings.local.php";
 $drupal_root = dirname(dirname($settings_dir));
+// Set the CIVICRM_SITE_KEY default.
+$civicrm_site_key = NULL;
 // If the environment variables are not set, set the default environment to 
 // 'dev' and the default name to the site's root directory name.
 $app_env = getenv('APP_ENV');
