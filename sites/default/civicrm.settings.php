@@ -170,7 +170,7 @@ define( 'CIVICRM_UF_BASEURL'      , "http{$_SERVER['protossl']}://{$_SERVER['HTT
  * We recommend using a 16-32 bit alphanumeric/punctuation key.
  * More info at http://wiki.civicrm.org/confluence/display/CRMDOC/Command-line+Script+Configuration
  */
-define( 'CIVICRM_SITE_KEY', 'ccc67bcb3fc118424bd3424943f55656' );
+define( 'CIVICRM_SITE_KEY', $civicrm_site_key );
 
 /*
  * If you want to disable IDS, set this to 0.
