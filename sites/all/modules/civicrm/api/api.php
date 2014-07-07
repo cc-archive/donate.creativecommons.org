@@ -38,9 +38,10 @@ function civicrm_api($entity, $action, $params, $extra = NULL) {
     $apiRequest['extra'] = $extra;
     // look up function, file, is_generic
     $apiRequest += _civicrm_api_resolve($apiRequest);
-    if (strtolower($action) == 'create' || strtolower($action) == 'delete') {
-      $apiRequest['is_transactional'] = 1;
-      $tx = new CRM_Core_Transaction();
+    if ((strtolower($action) == 'create' || strtolower($action) == 'delete' || strtolower($action) == 'submit')
+      && (!isset($params['is_transactional']) || $params['is_transactional'])) {
+        $apiRequest['is_transactional'] = 1;
+        $transaction = new CRM_Core_Transaction();
     }
     $errorFnName = ($apiRequest['version'] == 2) ? 'civicrm_create_error' : 'civicrm_api3_create_error';
     if ($apiRequest['version'] > 2) {
@@ -121,7 +122,7 @@ function civicrm_api($entity, $action, $params, $extra = NULL) {
       $err['tip'] = "add debug=1 to your API call to have more info about the error";
     }
     if (CRM_Utils_Array::value('is_transactional', $apiRequest)) {
-      $tx->rollback();
+      $transaction->rollback();
     }
     return $err;
   }
@@ -138,7 +139,7 @@ function civicrm_api($entity, $action, $params, $extra = NULL) {
       $err['trace'] = $e->getTraceAsString();
     }
     if (CRM_Utils_Array::value('is_transactional', CRM_Utils_Array::value('params',$apiRequest))) {
-      $tx->rollback();
+      $transaction->rollback();
     }
     return $err;
   }
@@ -152,7 +153,7 @@ function civicrm_api($entity, $action, $params, $extra = NULL) {
       $err['trace'] = $e->getTraceAsString();
     }
     if (CRM_Utils_Array::value('is_transactional', $apiRequest)) {
-      $tx->rollback();
+      $transaction->rollback();
     }
     return $err;
   }

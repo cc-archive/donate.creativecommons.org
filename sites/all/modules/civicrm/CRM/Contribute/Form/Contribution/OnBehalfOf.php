@@ -42,8 +42,10 @@ class CRM_Contribute_Form_Contribution_OnBehalfOf {
    */
   static function preProcess(&$form) {
     $session = CRM_Core_Session::singleton();
-    $contactID = $session->get('userID');
-
+    $contactID = $form->_contactID;
+    if(empty($contactID)) {
+      $contactID =  $form->getContactID();
+    }
     $ufJoinParams = array(
       'module' => 'onBehalf',
       'entity_table' => 'civicrm_contribution_page',
@@ -69,14 +71,30 @@ class CRM_Contribute_Form_Contribution_OnBehalfOf {
 
     if ($contactID) {
       $form->_employers = CRM_Contact_BAO_Relationship::getPermissionedEmployer($contactID);
-      if (!empty($form->_employers)) {
+
+      if (!empty($form->_membershipContactID) && $contactID != $form->_membershipContactID) {
+        // renewal case - membership being renewed may or may not be for organization
+        if (!empty($form->_employers) && array_key_exists($form->_membershipContactID, $form->_employers)) {
+          // if _membershipContactID belongs to employers list, we can say:
+          $form->_relatedOrganizationFound = TRUE;
+        }
+      } else if (!empty($form->_employers)) {
+        // not a renewal case and _employers list is not empty
         $form->_relatedOrganizationFound = TRUE;
+      }
 
-        $locDataURL = CRM_Utils_System::url('civicrm/ajax/permlocation', 'cid=', FALSE, NULL, FALSE);
+      if ($form->_relatedOrganizationFound) {
+        // Related org url - pass checksum if needed
+        $args = array('cid' => '');
+        if (!empty($_GET['cs'])) {
+          $args = array(
+            'uid' => $form->_contactID,
+            'cs' => $_GET['cs'],
+            'cid' => '',
+            );
+          }
+        $locDataURL = CRM_Utils_System::url('civicrm/ajax/permlocation', $args, FALSE, NULL, FALSE);
         $form->assign('locDataURL', $locDataURL);
-
-        $dataURL = CRM_Utils_System::url('civicrm/ajax/employer', 'cid=' . $contactID, FALSE, NULL, FALSE);
-        $form->assign('employerDataURL', $dataURL);
       }
 
       if ($form->_values['is_for_organization'] != 2) {
@@ -97,6 +115,7 @@ class CRM_Contribute_Form_Contribution_OnBehalfOf {
     }
   }
 
+
   /**
    * Function to build form for related contacts / on behalf of organization.
    *
@@ -106,18 +125,25 @@ class CRM_Contribute_Form_Contribution_OnBehalfOf {
    *
    * @static
    */
-  static function buildQuickForm(&$form) {
+  function buildQuickForm(&$form) {
     $form->assign('fieldSetTitle', ts('Organization Details'));
     $form->assign('buildOnBehalfForm', TRUE);
 
-    $session = CRM_Core_Session::singleton();
-    $contactID = $session->get('userID');
+    $contactID = $form->_contactID;
+    if(empty($contactID)) {
+      $contactID = $form->getContactID();
+    }
 
     if ($contactID && count($form->_employers) >= 1) {
       $form->add('text', 'organization_id', ts('Select an existing related Organization OR enter a new one'));
-      $form->add('hidden', 'onbehalfof_id', '', array('id' => 'onbehalfof_id'));
+      $employers = array();
+      foreach ($form->_employers as $id => $vals) {
+        $employers[$id] = $vals['name'];
+      }
+      $form->add('select', 'onbehalfof_id', 'onbehalfof_id', $employers);
 
-      $orgOptions = array(0 => ts('Select an existing organization'),
+      $orgOptions = array(
+        0 => ts('Select an existing organization'),
         1 => ts('Enter a new organization'),
       );
 
