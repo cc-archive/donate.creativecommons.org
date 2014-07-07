@@ -463,24 +463,13 @@ WHERE id={$contactId}; ";
    * @static
    *
    */
-  static
-  function buildOnBehalfForm(&$form,
-    $contactType       = 'Individual',
-    $countryID         = NULL,
-    $stateID           = NULL,
-    $title             = 'Contact Information',
-    $contactEditMode   = FALSE,
-    $maxLocationBlocks = 1
-  ) {
-    if ($title == 'Contact Information') {
-      $title = ts('Contact Information');
-    }
+  static function buildOnBehalfForm(&$form, $contactType, $countryID, $stateID, $title) {
 
     $config = CRM_Core_Config::singleton();
 
     $form->assign('contact_type', $contactType);
     $form->assign('fieldSetTitle', $title);
-    $form->assign('contactEditMode', $contactEditMode);
+    $form->assign('contactEditMode', TRUE);
 
     $attributes = CRM_Core_DAO::getAttribute('CRM_Contact_DAO_Contact');
     if ($form->_contactId) {
@@ -488,6 +477,7 @@ WHERE id={$contactId}; ";
     }
 
     switch ($contactType) {
+      case 'Organization':
       case 'Organization':
         $session = CRM_Core_Session::singleton();
         $contactID = $session->get('userID');
@@ -517,17 +507,12 @@ WHERE id={$contactId}; ";
           $form->assign('relatedOrganizationFound', TRUE);
         }
 
-        $isRequired = FALSE;
-        if (CRM_Utils_Array::value('is_for_organization', $form->_values) == 2) {
-          $isRequired = TRUE;
-        }
-        $form->add('text', 'organization_name', ts('Organization Name'), $attributes['organization_name'], $isRequired);
+        $form->add('text', 'organization_name', ts('Organization Name'), $attributes['organization_name'], TRUE);
+        break;
         break;
 
       case 'Household':
-        $form->add('text', 'household_name', ts('Household Name'),
-          $attributes['household_name']
-        );
+        $form->add('text', 'household_name', ts('Household Name'), $attributes['household_name']);
         break;
 
       default:
