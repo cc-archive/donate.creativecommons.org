@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.2                                                |
+ | CiviCRM version 4.4                                                |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2012                                |
+ | Copyright CiviCRM LLC (c) 2004-2014                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -28,41 +28,33 @@
 /**
  *
  * @package CRM
- * @copyright CiviCRM LLC (c) 2004-2012
+ * @copyright TTTP
  * $Id$
  *
  */
 
 /**
- * Used for displaying results
+ * Display the CiviCRM version
  *
+ * @code
+ * The version is {crmVersion}.
  *
+ * {crmVersion redact=auto assign=ver}The version is {$ver}.
+ * @endcode
  */
-class CRM_Campaign_Form_Task_Result extends CRM_Campaign_Form_Task {
+function smarty_function_crmVersion($params, &$smarty) {
+  $version = CRM_Utils_System::version();
 
-  /**
-   * build all the data structures needed to build the form
-   *
-   * @return void
-   * @access public
-   */
-  function preProcess() {}
+  $redact = !CRM_Core_Permission::check('access CiviCRM');
+  if ($redact) {
+    $parts = explode('.', $version);
+    $version = $parts[0] . '.' . $parts[1];
+  }
 
-  /**
-   * Function to actually build the form
-   *
-   * @return None
-   * @access public
-   */
-  public function buildQuickForm() {
-    $this->addButtons(array(
-        array(
-          'type' => 'done',
-          'name' => ts('Done'),
-          'isDefault' => TRUE,
-        ),
-      )
-    );
+  if (isset($params['assign'])) {
+    $smarty->assign($params['assign'], $version);
+  }
+  else {
+    return $version;
   }
 }
-
