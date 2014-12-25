@@ -55,4 +55,8 @@ libraries[ckeditor][download][type] = get
 libraries[ckeditor][download][url] = "http://download.cksource.com/CKEditor/CKEditor/CKEditor%204.4.6/ckeditor_4.4.6_full.tar.gz"
 libraries[ckeditor][destination] = libraries
 libraries[ckeditor][directory_name] = ckeditor
+libraries[s3_php5_curl][download][type] = git
+libraries[s3_php5_curl][download][url] = "ssh://git@git.giantrabbit.com/allgr/s3-php5-curl.git"
+libraries[s3_php5_curl][destination] = libraries
+libraries[s3_php5_curl][directory_name] = s3-php5-curl
 
