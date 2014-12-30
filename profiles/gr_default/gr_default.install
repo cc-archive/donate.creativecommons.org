@@ -261,6 +261,22 @@ function gr_default_install() {
       'settings' => serialize($full_html_settings),
     ))->execute();
 
+  // Restrict WYSIWYG View Modes.
+  variable_set('media_wysiwyg_view_mode_image_wysiwyg_restricted_view_modes_status', TRUE);
+  variable_set('media_wysiwyg_view_mode_image_wysiwyg_restricted_view_modes', array(
+    'default' => 'default',
+    'teaser' => 'teaser',
+    'full' => 'full',
+    'preview' => 'preview',
+    'rss' => 'rss',
+    'search_index' => 'search_index',
+    'search_result' => 'search_result',
+    'token' => 'token',
+    'wysiwyg' => 0,
+  ));
+  variable_set('media_wysiwyg_view_mode_image_file_wysiwyg_view_mode_status', TRUE);
+  variable_set('media_wysiwyg_view_mode_image_file_wysiwyg_view_mode', 'wysiwyg');
+
   // Linkit Profile.
   $linkit_default = array(
     'name' => 'wysiwyg_default',
