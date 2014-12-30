@@ -24,9 +24,9 @@ function gr_default_install() {
         'weight' => 0,
         'status' => 1,
       ),
-      // Line break filter.
-      'filter_autop' => array(
-        'weight' => 1,
+      // Media filter.
+      'media_filter' => array(
+        'weight' => 20,
         'status' => 1,
       ),
       // HTML corrector filter.
@@ -34,9 +34,9 @@ function gr_default_install() {
         'weight' => 10,
         'status' => 1,
       ),
-      // Media filter.
-      'media_filter' => array(
-        'weight' => 20,
+      // Line break filter.
+      'filter_autop' => array(
+        'weight' => 1,
         'status' => 1,
       ),
       // Pathologic filter.
