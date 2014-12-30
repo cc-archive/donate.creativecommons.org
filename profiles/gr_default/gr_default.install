@@ -277,6 +277,54 @@ function gr_default_install() {
   variable_set('media_wysiwyg_view_mode_image_file_wysiwyg_view_mode_status', TRUE);
   variable_set('media_wysiwyg_view_mode_image_file_wysiwyg_view_mode', 'wysiwyg');
 
+  // Set default display settings for image 'wysiwyg' view mode.
+  $img_file_modes = array(
+    array(
+      'status' => 0,
+      'weight' => '0',
+      'settings' => serialize(array('text' => 'Download [file:name]')),
+      'name' => 'image__wysiwyg__file_field_file_download_link',
+    ),
+    array(
+      'status' => 0,
+      'weight' => '0',
+      'name' => 'image__wysiwyg__file_field_file_default',
+      'settings' => NULL,
+    ),
+    array(
+      'status' => 1,
+      'weight' => '0',
+      'settings' => serialize(array(
+        'image_style' => '',
+        'image_link' => '',
+      )),
+      'name' => 'image__wysiwyg__file_field_image',
+    ),
+    array(
+      'status' => 0,
+      'weight' => '0',
+      'name' => 'image__wysiwyg__file_field_media_large_icon',
+      'settings' => NULL,
+    ),
+    array(
+      'status' => 0,
+      'weight' => '0',
+      'name' => 'image__wysiwyg__file_field_file_table',
+      'settings' => NULL,
+    ),
+    array(
+      'status' => 0,
+      'weight' => '0',
+      'name' => 'image__wysiwyg__file_field_file_url_plain',
+      'settings' => NULL,
+    ),
+  );
+  $query = db_insert('file_display')->fields(array('status', 'weight', 'name', 'settings'));
+  foreach ($img_file_modes as $mode) {
+    $query->values($mode);
+  }
+  $query->execute();
+
   // Linkit Profile.
   $linkit_default = array(
     'name' => 'wysiwyg_default',
