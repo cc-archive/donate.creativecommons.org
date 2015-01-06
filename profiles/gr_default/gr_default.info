@@ -18,10 +18,13 @@ dependencies[] = environment_indicator
 dependencies[] = field_ui
 dependencies[] = file_entity
 dependencies[] = googleanalytics
+dependencies[] = gr_tpl_tweaks
 dependencies[] = help
 dependencies[] = image
 dependencies[] = jquery_update
-dependencies[] = linkit
+; linkit is in our makefile, but can't be installed here
+; because of a race condition. See Issue #20664
+;dependencies[] = linkit
 dependencies[] = list
 dependencies[] = logintoboggan
 dependencies[] = media
@@ -42,8 +45,8 @@ dependencies[] = search
 dependencies[] = shortcut
 dependencies[] = toolbar
 dependencies[] = overlay
-dependencies[] = file
 dependencies[] = rdf
+dependencies[] = file
 dependencies[] = views
 dependencies[] = views_bulk_operations
 dependencies[] = wysiwyg

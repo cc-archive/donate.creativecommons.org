@@ -10,6 +10,8 @@
 function gr_default_install() {
   include_once DRUPAL_ROOT . '/profiles/minimal/minimal.install';
   minimal_install();
+  // See https://support.giantrabbit.com/issues/20664
+  module_enable(array('linkit'));
 
   variable_set('user_register', USER_REGISTER_ADMINISTRATORS_ONLY);
 
@@ -278,7 +280,7 @@ function gr_default_install() {
   variable_set('media_wysiwyg_view_mode_image_file_wysiwyg_view_mode', 'wysiwyg');
 
   // Set default display settings for image 'wysiwyg' view mode.
-  $img_file_modes = array(
+  $img_file_view_modes = array(
     array(
       'status' => 0,
       'weight' => '0',
@@ -320,7 +322,57 @@ function gr_default_install() {
     ),
   );
   $query = db_insert('file_display')->fields(array('status', 'weight', 'name', 'settings'));
-  foreach ($img_file_modes as $mode) {
+  foreach ($img_file_view_modes as $mode) {
+    $query->values($mode);
+  }
+  $query->execute();
+
+  // Set default display settings for doc 'wysiwyg' view mode.
+  $doc_view_modules = array(
+    array(
+      'status' => 0,
+      'weight' => '0',
+      'settings' => serialize(array(
+        'text' => 'Download [file:name]',
+      )),
+      'name' => 'document__wysiwyg__file_field_file_download_link',
+    ),
+    array(
+      'status' => 0,
+      'weight' => '0',
+      'name' => 'document__wysiwyg__file_field_file_default',
+      'settings' => NULL,
+    ),
+    array(
+      'status' => 0,
+      'weight' => '0',
+      'name' => 'document__wysiwyg__file_field_media_large_icon',
+      'settings' => NULL,
+    ),
+    array(
+      'status' => 1,
+      'weight' => '0',
+      'settings' => serialize(array(
+        'text' => '[file:name]',
+      )),
+      'name' => 'document__wysiwyg__file_field_file_simple_download_link',
+    ),
+    array(
+      'status' => 0,
+      'weight' => '0',
+      'name' => 'document__wysiwyg__file_field_file_table',
+      'settings' => NULL,
+    ),
+    array(
+      'status' => 0,
+      'weight' => '0',
+      'name' => 'document__wysiwyg__file_field_file_url_plain',
+      'settings' => NULL,
+    ),
+  );
+  $query = null;
+  $query = db_insert('file_display')->fields(array('status', 'weight', 'name', 'settings'));
+  foreach ($doc_file_view_modes as $mode) {
     $query->values($mode);
   }
   $query->execute();
