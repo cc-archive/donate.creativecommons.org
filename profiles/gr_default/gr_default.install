@@ -572,7 +572,6 @@ function gr_default_install() {
     'cron_schedule' => '0 4 * * *',
   ))->execute();
 
-  // Enable Zen and set as default.
+  // Enable Zen.
   theme_enable(array('zen'));
-  variable_set('theme_default', 'zen');
 }
