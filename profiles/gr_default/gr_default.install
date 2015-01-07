@@ -328,7 +328,7 @@ function gr_default_install() {
   $query->execute();
 
   // Set default display settings for doc 'wysiwyg' view mode.
-  $doc_view_modules = array(
+  $doc_file_view_modes = array(
     array(
       'status' => 0,
       'weight' => '0',
@@ -571,4 +571,8 @@ function gr_default_install() {
     'cron' => 'builtin',
     'cron_schedule' => '0 4 * * *',
   ))->execute();
+
+  // Enable Zen and set as default.
+  theme_enable(array('zen'));
+  variable_set('theme_default', 'zen');
 }
