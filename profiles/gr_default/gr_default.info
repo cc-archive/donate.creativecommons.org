@@ -2,6 +2,7 @@ name = GR Default Install
 description = Default install profile for Giant Rabbit.
 core = 7.x
 dependencies[] = admin_menu 
+dependencies[] = admin_menu_toolbar
 dependencies[] = admin_views
 dependencies[] = advanced_help
 dependencies[] = backup_migrate
