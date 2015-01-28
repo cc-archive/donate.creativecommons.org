@@ -25,6 +25,7 @@ dependencies[] = gr_tpl_tweaks
 dependencies[] = help
 dependencies[] = image
 dependencies[] = jquery_update
+dependencies[] = link
 ; linkit is in our makefile, but can't be installed here
 ; because of a race condition. See Issue #20664
 ;dependencies[] = linkit

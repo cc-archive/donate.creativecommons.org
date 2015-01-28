@@ -37,6 +37,7 @@ projects[gr_tpl_tweaks][download][type] = git
 projects[gr_tpl_tweaks][download][url] = "ssh://git@git.giantrabbit.com/allgr/gr_tpl_tweaks.git"
 projects[gr_tpl_tweaks][download][branch] = 7.x-1.x-dev
 projects[jquery_update][subdir] = contrib
+projects[link][subdir] = contrib
 projects[linkit][subdir] = contrib
 projects[linkit][version] = 3.x-dev
 projects[logintoboggan][subdir] = contrib
