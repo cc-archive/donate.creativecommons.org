@@ -24,9 +24,13 @@ projects[environment_indicator][subdir] = contrib
 projects[field_group][subdir] = contrib
 projects[file_entity][subdir] = contrib
 projects[file_entity][version] = 2.x-dev
-projects[google_analytics][subdir] = contrib
+projects[giantrabbit][type] = module
+projects[giantrabbit][subdir] = custom
+projects[giantrabbit][download][type] = git
+projects[giantrabbit][download][url] = "ssh://git@git.giantrabbit.com/allgr/giantrabbit.git"
 projects[globalredirect][subdir] = contrib
 projects[globalredirect][version] = 1.x-dev
+projects[google_analytics][subdir] = contrib
 projects[gr_tpl_tweaks][type] = module
 projects[gr_tpl_tweaks][subdir] = custom
 projects[gr_tpl_tweaks][download][type] = git
@@ -54,6 +58,7 @@ projects[views_bulk_operations][version] = 3.x-dev
 projects[views_bulk_operations][subdir] = contrib
 projects[wysiwyg][subdir] = contrib
 projects[wysiwyg][version] = 2.x-dev
+projects[xautoload][subdir] = contrib
 
 ; Themes
 projects[zen][version] = 6.x-dev

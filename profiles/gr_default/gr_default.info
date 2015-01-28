@@ -19,6 +19,7 @@ dependencies[] = environment_indicator
 dependencies[] = field_group
 dependencies[] = field_ui
 dependencies[] = file_entity
+dependencies[] = giantrabbit
 dependencies[] = googleanalytics
 dependencies[] = gr_tpl_tweaks
 dependencies[] = help
