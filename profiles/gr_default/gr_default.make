@@ -53,6 +53,7 @@ projects[pathologic][subdir] = contrib
 projects[pathologic][version] = 3.x-dev
 projects[redirect][subdir] = contrib
 projects[redirect][version] = 1.x-dev
+projects[search_api][subdir] = contrib
 projects[token][subdir] = contrib
 projects[views][subdir] = contrib
 projects[views_bulk_operations][version] = 3.x-dev
@@ -66,7 +67,7 @@ projects[zen][version] = 6.x-dev
 
 ; Libraries
 libraries[ckeditor][download][type] = get
-libraries[ckeditor][download][url] = "http://download.cksource.com/CKEditor/CKEditor/CKEditor%204.4.6/ckeditor_4.4.6_full.tar.gz"
+libraries[ckeditor][download][url] = "http://download.cksource.com/CKEditor/CKEditor/CKEditor%204.4.7/ckeditor_4.4.7_full.tar.gz"
 libraries[ckeditor][destination] = libraries
 libraries[ckeditor][directory_name] = ckeditor
 libraries[s3_php5_curl][download][type] = git

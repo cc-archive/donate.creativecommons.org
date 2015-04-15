@@ -42,6 +42,7 @@ dependencies[] = path
 dependencies[] = pathauto
 dependencies[] = pathologic
 dependencies[] = redirect
+dependencies[] = search_api
 dependencies[] = taxonomy
 dependencies[] = token
 dependencies[] = dblog
