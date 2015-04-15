@@ -35,6 +35,7 @@ dependencies[] = media
 dependencies[] = media_wysiwyg 
 dependencies[] = media_wysiwyg_view_mode
 dependencies[] = menu
+dependencies[] = metatag
 dependencies[] = module_filter
 dependencies[] = number
 dependencies[] = options
