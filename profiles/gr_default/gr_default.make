@@ -61,6 +61,7 @@ projects[views_bulk_operations][subdir] = contrib
 projects[wysiwyg][subdir] = contrib
 projects[wysiwyg][version] = 2.x-dev
 projects[xautoload][subdir] = contrib
+projects[xmlsitemap][subdir] = contrib
 
 ; Themes
 projects[zen][version] = 6.x-dev
