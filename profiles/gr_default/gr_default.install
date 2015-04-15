@@ -677,6 +677,9 @@ function gr_default_install() {
     'cron_schedule' => '0 4 * * *',
   ))->execute();
 
+  // Turn cron off by default.
+  variable_set('cron_safe_threshold', 0);
+
   // Enable Zen.
   theme_enable(array('zen'));
 }
