@@ -1,7 +1,9 @@
 <?php
 /**
  * @file
- * GR Default install configuration
+ * GR Default install configuration.
+ * !IMPORTANT! If you update the media or wywsiwyg portions of this install,
+ * please also update the gr_media_defaults module.
  */
 
 /**
