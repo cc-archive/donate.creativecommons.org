@@ -393,6 +393,10 @@ function gr_default_install() {
     'wysiwyg' => 0,
   ));
 
+  // Media Browser Plus settings.
+  variable_set('media_wysiwyg_wysiwyg_allowed_types', array('image', 'video', 'audio', 'document'));
+  variable_set('media_wysiwyg_wysiwyg_browser_plugins', array('upload', 'media_browser_plus--media_browser_thumbnails', 'media_browser_plus--media_browser_my_files'));
+
   // Linkit WSYIWYG Profile.
   $linkit_wysiwyg_default = array(
     'name' => 'wysiwyg_default',
