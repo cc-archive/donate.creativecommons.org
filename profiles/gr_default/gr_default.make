@@ -44,6 +44,7 @@ projects[pathauto][version] = 1.x-dev
 projects[pathologic][version] = 3.x-dev
 projects[redirect][version] = 1.x-dev
 projects[search_api][subdir] = contrib
+projects[search_api_db][subdir] = contrib
 projects[token][subdir] = contrib
 projects[views][subdir] = contrib
 projects[views_bulk_operations][version] = 3.x-dev

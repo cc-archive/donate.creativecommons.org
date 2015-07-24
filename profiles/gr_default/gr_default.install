@@ -56,34 +56,6 @@ function gr_default_install() {
   $default_theme = variable_get('theme_default', 'bartik');
   $admin_theme = 'seven';
 
-  // Default blocks.
-  $blocks = array(
-    array(
-      'module' => 'search',
-      'delta' => 'form',
-      'theme' => $default_theme,
-      'status' => 1,
-      'weight' => -1,
-      'region' => 'sidebar_first',
-      'pages' => '',
-      'cache' => -1,
-    ),
-  );
-  $query = db_insert('block')->fields(array(
-    'module',
-    'delta',
-    'theme',
-    'status',
-    'weight',
-    'region',
-    'pages',
-    'cache',
-  ));
-  foreach ($blocks as $block) {
-    $query->values($block);
-  }
-  $query->execute();
-
   // Insert default pre-defined node types into the database. For a complete
   // list of available node type attributes, refer to the node type API
   // documentation at: http://api.drupal.org/api/HEAD/function/hook_node_info.
@@ -682,6 +654,24 @@ function gr_default_install() {
     'cron' => 'builtin',
     'cron_schedule' => '0 4 * * *',
   ))->execute();
+
+  // Search API DB Server
+  $search_api_server_options = array(
+    'database' => 'default:default',
+    'min_chars' => 1,
+    'partial_matches' => 0,
+  );
+  $search_api_server_values = array(
+    'name' => 'MySQL',
+    'machine_name' => 'mysql',
+    'enabled' => 1,
+    'description' => '',
+    'class' => 'search_api_db_service',
+    'options' => serialize($search_api_server_options),
+  );
+  db_insert('search_api_server')
+    ->fields($search_api_server_values)
+    ->execute();
 
   // Turn cron off by default.
   variable_set('cron_safe_threshold', 0);
