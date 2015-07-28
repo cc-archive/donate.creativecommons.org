@@ -67,7 +67,4 @@ libraries[s3_php5_curl][destination] = libraries
 libraries[s3_php5_curl][directory_name] = s3-php5-curl
 
 ; Patches
-projects[media_browser_plus][patch][2215183] =
-https://www.drupal.org/files/issues/media_browser_plus-folder-save-2215183-5.patch
-; projects[media_browser_plus][patch][2387943] =
-https://www.drupal.org/files/issues/2387943-subfolder-search-12.patch
+projects[media_browser_plus][patch][2215183] = https://www.drupal.org/files/issues/media_browser_plus-folder-save-2215183-5.patch
