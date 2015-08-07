@@ -49,7 +49,7 @@ ga('ecommerce:addTransaction', {
 
 {/literal}
 
-id: "{$trxn_id}",
+id: "{$Contribution.id}",
 affiliation: '',
 revenue: "{$amount}",
 {literal}
