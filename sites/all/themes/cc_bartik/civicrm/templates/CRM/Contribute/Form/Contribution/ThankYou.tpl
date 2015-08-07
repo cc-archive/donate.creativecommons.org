@@ -30,7 +30,6 @@
 {include file="CRM/common/TrackingFields.tpl"}
 
 {crmAPI var="Contribution" entity="Contribution" action="get" trxn_id=$trxn_id}
-{debug}
 
 <!-- Begin Google Analytics --> 
 
@@ -59,7 +58,7 @@ tax: '0' });
 
 ga('ecommerce:addItem', {
 {/literal}
-id: "{$Contribution.contribution_id}",
+id: "{$Contribution.id}",
 sku: 'Donation',
 name: "{$form.custom_42.value}",
 category: '',
