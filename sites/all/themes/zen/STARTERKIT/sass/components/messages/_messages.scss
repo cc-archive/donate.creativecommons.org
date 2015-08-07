@@ -1,0 +1,145 @@
+// Messages
+//
+// System alerts.
+//
+// Style guide: components.messages
+
+// Messages
+//
+// A single message.
+//
+// Weight: -1
+//
+// Markup: messages-single.hbs
+//
+// .messages--warning   - Warning messages.
+// .messages--error     - Error messages.
+//
+// Style guide: components.messages.single
+
+// Messages
+//
+// Multiple messages.
+//
+// Markup: messages-multiple.hbs
+//
+// .messages--warning   - Warning messages.
+// .messages--error     - Error messages.
+//
+// Style guide: components.messages.multiple
+
+// Message colors
+//
+// Drupal system status reports use just the message colors and no other
+// styling.
+//
+// markup: messages-color.hbs
+//
+// .messages--ok-color      - "Ok" status.
+// .messages--warning-color - Warning status.
+// .messages--error-color   - Error status.
+//
+// Style guide: components.messages.status
+
+.messages,
+%messages {
+  @extend %messages--ok-color;
+  @include output-rhythm(margin, rhythm(1) 0);
+  padding: 10px 10px 10px 50px;
+  background-image: inline-image('components/messages/messages--ok.png');
+  @if support-legacy-browser(ie, '7') {
+    *background-image: image-url('components/messages/messages--ok.png');
+  }
+  background-position: 8px 8px;
+  background-repeat: no-repeat;
+  border: 1px solid color(status-border);
+
+  @include rtl() {
+    padding: 10px 50px 10px 10px;
+    background-position: 99% 8px;
+  }
+
+  &--ok-color {
+    background-color: color(status-bg);
+    color: color(status);
+  }
+
+  &--warning-color {
+    background-color: color(warning-bg);
+    color: color(warning);
+  }
+
+  &--error-color {
+    background-color: color(error-bg);
+    color: color(error);
+  }
+
+  &--warning {
+    @extend %messages;
+    @extend %messages--warning-color;
+    background-image: inline-image('components/messages/messages--warning.png');
+    @if support-legacy-browser(ie, '7') {
+      *background-image: image-url('components/messages/messages--warning.png');
+    }
+    border-color: color(warning-border);
+  }
+
+  &--error {
+    @extend %messages;
+    @extend %messages--error-color;
+    background-image: inline-image('components/messages/messages--error.png');
+    @if support-legacy-browser(ie, '7') {
+      *background-image: image-url('components/messages/messages--error.png');
+    }
+    border-color: color(error-border);
+  }
+
+  &--error__highlighted-text {
+    color: color(status-highlight);
+  }
+
+  &__list {
+    margin: 0;
+  }
+
+  &__item {
+    list-style-image: none;
+  }
+}
+
+//
+// Drupal selectors.
+//
+
+.messages {
+  &.warning {
+    @extend %messages--warning;
+  }
+
+  &.error {
+    @extend %messages--error;
+  }
+}
+
+.messages--error .error,
+.messages.error .error {
+  @extend %messages--error__highlighted-text;
+}
+
+// System status report.
+.ok {
+  @extend %messages--ok-color;
+}
+
+.warning {
+  @extend %messages--warning-color;
+}
+
+.error {
+  @extend %messages--error-color;
+}
+
+// Node revisions.
+.revision-current {
+  @extend %messages--ok-color;
+}
