@@ -2,12 +2,12 @@
 Error: Function add-colors is missing argument $new-colors.
         on line 122 of /var/www/creativecommons.local/sites/all/themes/cc_zen/sass/_variables.scss
         from line 21 of /var/www/creativecommons.local/sites/all/themes/cc_zen/sass/_init.scss
-        from line 2 of /var/www/creativecommons.local/sites/all/themes/cc_zen/sass/style-guide/chroma-kss-styles.scss
+        from line 1 of /var/www/creativecommons.local/sites/all/themes/cc_zen/sass/style-guide/kss-only.scss
 
 Backtrace:
 /var/www/creativecommons.local/sites/all/themes/cc_zen/sass/_variables.scss:122
 /var/www/creativecommons.local/sites/all/themes/cc_zen/sass/_init.scss:21
-/var/www/creativecommons.local/sites/all/themes/cc_zen/sass/style-guide/chroma-kss-styles.scss:2
+/var/www/creativecommons.local/sites/all/themes/cc_zen/sass/style-guide/kss-only.scss:1
 /home/kbrownell/.rvm/gems/ruby-2.1.3/gems/sass-3.4.16/lib/sass/tree/visitors/perform.rb:73:in `block in perform_arguments'
 /home/kbrownell/.rvm/gems/ruby-2.1.3/gems/sass-3.4.16/lib/sass/tree/visitors/perform.rb:65:in `zip'
 /home/kbrownell/.rvm/gems/ruby-2.1.3/gems/sass-3.4.16/lib/sass/tree/visitors/perform.rb:65:in `perform_arguments'
@@ -87,4 +87,4 @@ Backtrace:
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: Function add-colors is missing argument $new-colors.\A         on line 122 of /var/www/creativecommons.local/sites/all/themes/cc_zen/sass/_variables.scss\A         from line 21 of /var/www/creativecommons.local/sites/all/themes/cc_zen/sass/_init.scss\A         from line 2 of /var/www/creativecommons.local/sites/all/themes/cc_zen/sass/style-guide/chroma-kss-styles.scss"; }
+  content: "Error: Function add-colors is missing argument $new-colors.\A         on line 122 of /var/www/creativecommons.local/sites/all/themes/cc_zen/sass/_variables.scss\A         from line 21 of /var/www/creativecommons.local/sites/all/themes/cc_zen/sass/_init.scss\A         from line 1 of /var/www/creativecommons.local/sites/all/themes/cc_zen/sass/style-guide/kss-only.scss"; }

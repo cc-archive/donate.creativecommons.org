@@ -11,6 +11,9 @@
 .header,
 %header {
   @extend %clearfix;
+  max-height: 40px;
+  background: linear-gradient(color(green), color(green-dark)) ;
+  border-bottom: solid #777 1px;
 
   // Wrapping link for logo.
   &__logo {
@@ -31,7 +34,7 @@
 
   // Wrapper for website name and slogan.
   &__name-and-slogan {
-    float: left;
+    display: none;
   }
 
   // The name of the website.
