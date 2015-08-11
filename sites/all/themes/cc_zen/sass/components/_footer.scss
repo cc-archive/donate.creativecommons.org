@@ -1,0 +1,55 @@
+.footer__wrapper {
+  clear: both;
+  padding: 40px 0;
+  background: color(green-light);
+}
+
+.region-footer {
+  @extend %container-default;
+  li, p, a {
+    color: color(white);
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  } 
+}
+
+.region-footer-first {
+  padding-left: 0;
+  .menu {
+    padding: 0 0 0 0;
+  }
+  .menu__item {
+    display: inline-block;
+    padding: 0.5em 0;
+    margin: 0.5em 0;
+    li, p, a {
+      font-size: 14px;
+    }
+    a {
+      padding-left: 10px;
+      padding-right: 10px;
+      border-right: 1px solid color(white);
+    }
+    &.first a {
+      padding-left: 0;
+    }
+    &.last a {
+      border-right: none;
+    }
+  }
+}
+
+.region-footer-second {
+  li, p, a {
+    font-size: 12px;
+    line-height: 1.5em;
+  }
+  #block-block-6 {
+    float: right;
+    max-width: 180px;
+  }
+}
+
