@@ -12,13 +12,13 @@
 %header {
   @extend %clearfix;
   max-height: 40px;
-  background: linear-gradient(color(green), color(green-dark)) ;
+  background: linear-gradient(color(green), color(green-dark));
   border-bottom: solid #777 1px;
 
   // Wrapping link for logo.
   &__logo {
     float: left;
-    margin: 0 10px 0 0;
+    margin: 0 10px 10px 0;
     padding: 0;
 
     @include rtl() {
@@ -76,4 +76,8 @@
     // Clear the logo.
     clear: both;
   }
+}
+
+.header__wrapper {
+  @extend %container-default;
 }

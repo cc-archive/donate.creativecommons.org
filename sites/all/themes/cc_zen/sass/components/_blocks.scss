@@ -1,12 +1,40 @@
+#block-block-3,
+#block-block-4,
+#block-block-5 {
+  min-width: 235px;
+  p, ul {
+    font-size: (.89 * $base-font-size);
+  }
+  h1 {
+    font-size: (1.25 * $base-font-size);
+  }
+  @include respond-to(medium) {
+    min-width: 390px;
+  }
+}
+
 #block-block-8 {
   display: none;
 }
 
 .sidebar .block {
-  background-color: color(grey-medium-light);
-  border-color: color(grey-dark);
+  background-color: color(grey-light);
+  border-color: color(grey-medium);
   margin: 0 0 20px;
   padding: 15px 20px;
   font-family: $helvetica;
-  font-size: (.75 * $base-font-size, .75);
+  color: color(grey-medium-dark);
+  h2 {
+    border-bottom: 1px solid color(grey-light-light);
+  }
 }
+
+#block-block-9 {
+  padding-bottom: 20px;
+  border-bottom: 1px solid color(grey-light-light);
+  p {
+    margin-top: 0;
+  }
+}
+
+

@@ -14,7 +14,7 @@
 // We are going to create a fluid grid with 1, 3, or 5 columns and 20px gutters
 // between columns (applied as 10px of left/right padding on each column).
 $zen-columns: 1;
-$zen-gutters: 20px;
+$zen-gutters: 30px;
 
 // If you need IE6/7 support for box-sizing: border-box (default), see _init.scss
 //$zen-box-sizing: content-box;
@@ -212,6 +212,14 @@ $zen-auto-include-grid-item-base: false;
       @include zen-grid-item(1, 5);
     }
   }
+}
+
+%container-default {
+  max-width: 999px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 @media print {

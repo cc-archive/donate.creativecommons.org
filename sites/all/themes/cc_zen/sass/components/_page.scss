@@ -22,6 +22,7 @@
 
 .main-content {
   @include padding-trailer(0, $base-font-size);
+  padding-right: 30px;
 }
 
 .page-user {
@@ -32,10 +33,7 @@
 
 .page {
   .main {
-    max-width: 70%;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 10px;
-    padding-right: 10px;
+    @extend %container-default;
+    margin-top: 30px;
   }
 }
