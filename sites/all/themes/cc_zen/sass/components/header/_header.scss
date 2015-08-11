@@ -11,14 +11,14 @@
 .header,
 %header {
   @extend %clearfix;
-  max-height: 40px;
-  background: linear-gradient(color(green), color(green-dark));
+  max-height: 50px;
+  @include background-image(linear-gradient(color(green-light), color(green-dark)));
   border-bottom: solid #777 1px;
 
   // Wrapping link for logo.
   &__logo {
     float: left;
-    margin: 0 10px 10px 0;
+    margin: 5px 0 5px 0;
     padding: 0;
 
     @include rtl() {

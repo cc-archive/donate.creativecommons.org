@@ -78,7 +78,7 @@ $zen-auto-include-grid-item-base: false;
 //
 // Use 3 grid columns for smaller screens.
 //
-@media all and (min-width: 480px) and (max-width: 959px) {
+@media all and (min-width: 640px) and (max-width: 959px) {
 
   $zen-columns: 3 !global;
 

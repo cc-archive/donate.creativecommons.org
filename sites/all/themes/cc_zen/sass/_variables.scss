@@ -121,14 +121,13 @@ $font-watermark:  $impact;
 $chroma: define-default-color-scheme('Descriptive color names for use in "functional" color names below.');
 $chroma: add-colors((
   white:                  #fff,
+  white-transparent:      rgba(255, 255, 255, .25),
   grey-extra-light:       #fffeff,
   grey-light:             #f8f8f8,
-  grey-medium-light:      #f6f6f2,
-  grey-medium:            #f0f0f0,
-  grey-medium-dark:       #404040,
-  grey-dark:              #f9f9f9,
+  grey-medium-light:      #f0f0f0,
+  grey-medium:            #d3d7d9,
+  grey-dark:              #404040,
   grey-extra-dark:        #3b3b3b,
-  grey-light-light:       #d3d7d9,
   black:                  #000,
 
   blue:                   #4374b7,
@@ -144,8 +143,7 @@ $chroma: add-colors((
   yellow:                 #ff0,
   yellow-dark:            #ed5,
 
-  green:                  #8fbb0d,
-  green-pale:             #f8fff0,
+  green-pale:             #8fbb0d,
   green-light:            #98c807,
   green-dark:             #6b8925,
   ));
@@ -154,7 +152,7 @@ $chroma: add-colors((
 $chroma: define-color-scheme('functional', 'Colors used by functional parts of the design.');
 $chroma: add-colors('functional', (
   // Colors used in the main content area.
-  text:                   'grey-medium-dark',
+  text:                   'black',
   text-bg:                'white',
 
   link:                   'blue',
@@ -228,7 +226,7 @@ $chroma-active-scheme: 'functional';
 // Style guide: sass.variables.breakpoints
 
 $breakpoints: (
-  'small':        (444px,       'no-query' true),
+  'small':        (640px,       'no-query' true),
   'medium':       (777px,       'no-query' true),
   'medium-only':  (777px 998px, 'no-query' true),
   'large':        (999px,       'no-query' true),

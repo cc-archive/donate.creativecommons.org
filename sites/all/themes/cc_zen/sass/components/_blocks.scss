@@ -9,7 +9,36 @@
     font-size: (1.25 * $base-font-size);
   }
   @include respond-to(medium) {
-    min-width: 390px;
+    min-width: 300px;
+  }
+  @include respond-to(large) {
+    width: 390px;
+  }
+}
+
+#block-block-3 {
+  img {
+    width: 200px;
+    height: auto;
+  }
+}
+
+#block-block-4 {
+  img {
+    width: 300px;
+    height: auto;
+  }
+  @include respond-to(small) {
+    img {
+      width: 200px;
+      height: auto;
+    }
+  }
+  @include respond-to(large) {
+    img {
+      width: 300px;
+      height: auto;
+    }
   }
 }
 
@@ -19,19 +48,19 @@
 
 .sidebar .block {
   background-color: color(grey-light);
-  border-color: color(grey-medium);
+  border-color: color(grey-medium-light);
   margin: 0 0 20px;
   padding: 15px 20px;
   font-family: $helvetica;
-  color: color(grey-medium-dark);
+  color: color(grey-dark);
   h2 {
-    border-bottom: 1px solid color(grey-light-light);
+    border-bottom: 1px solid color(grey-medium);
   }
 }
 
 #block-block-9 {
   padding-bottom: 20px;
-  border-bottom: 1px solid color(grey-light-light);
+  border-bottom: 1px solid color(grey-medium);
   p {
     margin-top: 0;
   }
