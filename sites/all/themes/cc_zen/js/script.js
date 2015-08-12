@@ -20,6 +20,26 @@
 
       // Place your code here.
 
+      cj('.email-5-section').insertAfter('.last_name-section');
+      cj('.form-submit').val('Process Contribution');
+      cj('label[for=CIVICRM_QFID_1_20]').text('I want to contribute this amount monthly.');
+      cj('#frequency_unit').hide();
+      cj('#recur_installments_num').hide();
+      cj('.is_recur-section').parent().html(cj('.is_recur-section').parent().html().replace(/every/g, ''));
+
+      cj('#CIVICRM_QFID_11_4').click(function(){
+        var intervalID = setInterval(
+        function() {
+          if ($('#billingcheckbox').length > 0) {
+            cj('label[for=billingcheckbox]').text('Billing Name and Address is the same as Shipping Address');
+            cj('#billingcheckbox').prop('checked', true);
+            clearInterval(intervalID);
+          }
+        },
+        1000
+        );
+      });
+
     }
   };
 
