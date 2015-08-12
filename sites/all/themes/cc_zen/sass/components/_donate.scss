@@ -2,9 +2,12 @@
   .main-content {
     color: color(grey-dark);
   }
-}
 
-#crm-container .crm-button input.form-submit {
-  padding: 4px 6px;
-  line-height: 1.75rem;
+  #crm-container .crm-submit-buttons {
+    height: 35px;
+  }
+
+  #crm-container .crm-button input.form-submit {
+    padding: 4px 6px;
+  }
 }
