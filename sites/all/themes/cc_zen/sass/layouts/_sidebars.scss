@@ -104,6 +104,7 @@ $zen-auto-include-grid-item-base: false;
     // Span 2 columns, starting in 1st column from left.
     .main-content {
       @include zen-grid-item(2, 2);
+      padding-right: $zen-gutters;
     }
 
     // Span 1 column, starting in 3rd column from left.
@@ -185,6 +186,7 @@ $zen-auto-include-grid-item-base: false;
     // Span 4 columns, starting in 1st column from left.
     .main-content {
       @include zen-grid-item(3, 3);
+      padding-right: $zen-gutters;
     }
 
     // Span 1 column, starting in 5th column from left.
