@@ -1,6 +1,4 @@
-#block-block-3,
-#block-block-4,
-#block-block-5 {
+.block-donate-page {
   min-width: 235px;
   p, ul {
     font-size: (.89 * $base-font-size);
@@ -16,14 +14,14 @@
   }
 }
 
-#block-block-3 {
+.block-lessig-quote {
   img {
     width: 200px;
     height: auto;
   }
 }
 
-#block-block-4 {
+.block-where-donation-goes {
   img {
     width: 300px;
     height: auto;
@@ -42,7 +40,7 @@
   }
 }
 
-#block-block-8 {
+.block-pingdom {
   display: none;
 }
 
@@ -58,7 +56,7 @@
   }
 }
 
-#block-block-9 {
+.block-donation-kickstarter {
   padding-bottom: 20px;
   border-bottom: 1px solid color(grey-medium);
   p {
