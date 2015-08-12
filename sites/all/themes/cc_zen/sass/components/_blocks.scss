@@ -7,7 +7,7 @@
     font-size: (1.25 * $base-font-size);
   }
   @include respond-to(medium) {
-    min-width: 300px;
+    min-width: 235px;
   }
   @include respond-to(large) {
     width: 390px;
@@ -26,7 +26,7 @@
     width: 300px;
     height: auto;
   }
-  @include respond-to(small) {
+  @include respond-to(medium) {
     img {
       width: 200px;
       height: auto;
