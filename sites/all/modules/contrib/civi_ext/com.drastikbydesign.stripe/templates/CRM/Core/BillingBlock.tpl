@@ -198,7 +198,7 @@
                 <fieldset class="billing_name_address-group">
                   <legend>{ts}Billing Name and Address{/ts}</legend>
                     {if $profileAddressFields}
-                      <input type="checkbox" id="billingcheckbox" value=0> <label for="billingcheckbox">{ts}Billing Address is same as above{/ts}</label>
+                      <input type="checkbox" id="billingcheckbox" value=1 checked> <label for="billingcheckbox">{ts}Billing Name and Address is the same as Shipping Address{/ts}</label>
                     {/if}
                     <div class="crm-section billing_name_address-section">
                         <div class="crm-section billingNameInfo-section">
