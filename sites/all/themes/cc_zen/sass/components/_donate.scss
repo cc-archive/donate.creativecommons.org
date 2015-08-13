@@ -1,13 +1,44 @@
-.page-civicrm-contribute {
+.page-civicrm-contribute-transact {
   .main-content {
     color: color(grey-dark);
   }
 
-  #crm-container .crm-submit-buttons {
-    height: 35px;
-  }
+  #crm-container {
+    .crm-submit-buttons {
+      height: 35px;
+    }
 
-  #crm-container .crm-button input.form-submit {
-    padding: 4px 6px;
+    .crm-button input.form-submit {
+      padding: 4px 6px;
+    }
+
+    .other_amount-section input {
+      margin: -20px 0 0 20px;
+      width: 60px;
+    }
+
+    .contribution_amount-content {
+      .price-set-row {
+        margin-bottom: 20px;
+      }
+
+      .price-set-option-content label {
+        color: color(green);
+        font-size: (1.75 * $base-font-size);
+        font-weight: bold;
+        padding-left: 10px;
+      }
+
+      .price-set-option-content input.form-radio {
+        vertical-align: top;
+      }
+    }
+
+    .is_recur-section p .description,
+    #frequency_unit,
+    #recur_installments_num,
+    .other_amount-section .label {
+      display: none;
+    }
   }
 }
