@@ -18,10 +18,10 @@
   Drupal.behaviors.my_custom_behavior = {
     attach: function (context, settings) {
 
-      cj('.page-civicrm-contribute-transact .email-5-section').insertAfter('.last_name-section');
-      cj('.page-civicrm-contribute-transact .form-submit').val('Process Contribution');
-      cj('.page-civicrm-contribute-transact label[for=CIVICRM_QFID_1_20]').text('I want to contribute this amount monthly.');
-      cj('.page-civicrm-contribute-transact .is_recur-section').parent().html(cj('.is_recur-section').parent().html().replace(/every/g, ''));
+      $('.page-civicrm-contribute-transact .email-5-section').insertAfter('.last_name-section');
+      $('.page-civicrm-contribute-transact .form-submit').val('Process Contribution');
+      $('.page-civicrm-contribute-transact label[for=CIVICRM_QFID_1_20]').text('I want to contribute this amount monthly.');
+      $('.page-civicrm-contribute-transact .is_recur-section').parent().html(cj('.is_recur-section').parent().html().replace(/every/g, ''));
 
     }
   };
