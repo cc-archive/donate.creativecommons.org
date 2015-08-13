@@ -21,8 +21,9 @@
       $('.page-civicrm-contribute-transact .email-5-section').insertAfter('.last_name-section');
       $('.page-civicrm-contribute-transact .form-submit').val('Process Contribution');
       $('.page-civicrm-contribute-transact label[for=CIVICRM_QFID_1_20]').text('I want to contribute this amount monthly.');
-      $('.page-civicrm-contribute-transact .is_recur-section').parent().html(cj('.is_recur-section').parent().html().replace(/every/g, ''));
-
+      $('.page-civicrm-contribute-transact .is_recur-section .content p strong').contents().filter(function() {
+        return this.nodeType === 3;
+      }).remove();
     }
   };
 
