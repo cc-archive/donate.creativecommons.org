@@ -1,13 +1,10 @@
 .block-donate-page {
-  min-width: 235px;
+  width: 342px;
   p, ul {
     font-size: (.89 * $base-font-size);
   }
   h1 {
     font-size: (1.25 * $base-font-size);
-  }
-  @include respond-to(medium) {
-    min-width: 235px;
   }
   @include respond-to(large) {
     width: 390px;

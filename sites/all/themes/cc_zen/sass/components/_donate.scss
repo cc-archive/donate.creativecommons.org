@@ -4,12 +4,34 @@
   }
 
   #crm-container {
-    .crm-submit-buttons {
-      height: 40px;
+    .crm-group.custom_pre_profile-group,
+    .crm-group.payment_options-group,
+    .billing_mode-group.credit_card_info-group,
+    .billing_name_address-group {
+      .crm-section {
+        .label {
+          width: 27%;
+        }
+        .content {
+          margin-left: 30%;
+        }
+      }
     }
 
-    .crm-button input.form-submit {
-      padding: 8px 10px;
+    .price_set-section,
+    .is_recur-section,
+    .custom_12-section {
+      .label {
+        width: 0;
+      }
+      .content {
+        margin-left: 5%;
+      }
+    }
+
+    .group-section .content {
+      margin-top: 20px;
+      margin-left: 5%;
     }
 
     .other_amount-section input {
@@ -34,11 +56,29 @@
       }
     }
 
+    .is_recur-section label {
+      margin-left: 10px;
+    }
+
+    .payment_processor-section .content label {
+      margin: 0 10px 0 5px;
+    }
+
     .is_recur-section p .description,
     #frequency_unit,
     #recur_installments_num,
-    .other_amount-section .label {
+    .other_amount-section .label,
+    .custom_42-section {
       display: none;
     }
+
+    .crm-submit-buttons {
+      height: 40px;
+    }
+
+    .crm-button input.form-submit {
+      padding: 8px 10px;
+    }
+
   }
 }
