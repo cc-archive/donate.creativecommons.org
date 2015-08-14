@@ -81,10 +81,19 @@
 
     .crm-submit-buttons {
       height: 40px;
+      margin: 0;
+    }
+
+    .crm-button_qf_Main_upload {
+      width: 100%;
+      @include respond-to(medium) {
+        width: auto;
+      }
     }
 
     .crm-button input.form-submit {
       padding: 8px 10px;
+      width: 100%;
     }
 
   }
