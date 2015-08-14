@@ -28,7 +28,7 @@
     padding: 0.5em 0;
     margin: 0.5em 0;
     li, p, a {
-      font-size: 14px;
+      @include adjust-font-size-to(1 * $base-font-size);
     }
     a {
       padding-left: 10px;
@@ -46,8 +46,7 @@
 
 .region-footer-second {
   li, p, a {
-    font-size: 12px;
-    line-height: 1.5em;
+    @include adjust-font-size-to(.89 * $base-font-size, 1);
   }
   #block-block-6 {
     float: right;

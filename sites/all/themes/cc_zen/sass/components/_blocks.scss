@@ -1,30 +1,21 @@
 .block-donate-page {
   p, ul {
-    font-size: (.89 * $base-font-size);
+    @include adjust-font-size-to(.89 * $base-font-size);
   }
-  h1 {
-    font-size: (1.25 * $base-font-size);
+  h2 {
+    @include adjust-font-size-to(1.35 * $base-font-size, 1.45);
+  }
+  h3 {
+    @include adjust-font-size-to(1.17 * $base-font-size, 1.27);
   }
 }
 
 .block-where-donation-goes {
   img {
-    width: 300px;
+    width: 80%;
     height: auto;
   }
-  @include respond-to(medium) {
-    img {
-      width: 200px;
-      height: auto;
-    }
-  }
-  @include respond-to(large) {
-    img {
-      width: 300px;
-      height: auto;
-    }
-  }
-}
+} 
 
 .block-pingdom {
   display: none;

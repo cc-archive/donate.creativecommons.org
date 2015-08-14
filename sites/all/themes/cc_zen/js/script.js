@@ -24,6 +24,10 @@
       $('.page-civicrm-contribute-transact .is_recur-section .content p strong').contents().filter(function() {
         return this.nodeType === 3;
       }).remove();
+
+      $("table.selector.crm-profile-tagsandgroups input[type=checkbox]").each(function(idx,obj){
+        $(obj).attr('checked','checked') ;
+      }) ;
     }
   };
 

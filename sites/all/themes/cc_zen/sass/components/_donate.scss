@@ -46,7 +46,7 @@
 
       .price-set-option-content label {
         color: color(green);
-        font-size: (1.75 * $base-font-size);
+        @include adjust-font-size-to(1.75 * $base-font-size, 1.15);
         font-weight: bold;
         padding-left: 10px;
       }
@@ -70,6 +70,13 @@
     .other_amount-section .label,
     .custom_42-section {
       display: none;
+    }
+
+    .custom_post_profile-group {
+      .crm-section.group-section .description {
+        @include adjust-font-size-to(1 * $base-font-size);
+        color: color(grey-dark);
+      }
     }
 
     .crm-submit-buttons {
