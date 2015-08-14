@@ -1,20 +1,9 @@
 .block-donate-page {
-  width: 342px;
   p, ul {
     font-size: (.89 * $base-font-size);
   }
   h1 {
     font-size: (1.25 * $base-font-size);
-  }
-  @include respond-to(large) {
-    width: 390px;
-  }
-}
-
-.block-lessig-quote {
-  img {
-    width: 200px;
-    height: auto;
   }
 }
 
