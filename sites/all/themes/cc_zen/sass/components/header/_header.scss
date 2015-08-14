@@ -19,7 +19,6 @@
   &__logo {
     float: left;
     margin: 5px 0 5px 0;
-    padding: 0;
 
     @include rtl() {
       float: right;
@@ -30,6 +29,9 @@
   // Logo image.
   &__logo-image {
     vertical-align: bottom;
+    @include respond-to(large) {
+      padding-left: 15px;
+    }
   }
 
   // Wrapper for website name and slogan.
