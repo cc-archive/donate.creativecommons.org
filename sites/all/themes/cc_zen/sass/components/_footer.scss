@@ -19,6 +19,9 @@
 .region-footer-first {
   .menu {
     padding: 0 0 0 15px;
+    @include respond-to(medium) {
+      padding: 0;
+    }
   }
   .menu__item {
     display: inline-block;
@@ -50,6 +53,9 @@
     float: right;
     max-width: 170px;
     padding-right: 15px;
+    @include respond-to(medium) {
+      padding-right: 0;
+    }
   }
 }
 
