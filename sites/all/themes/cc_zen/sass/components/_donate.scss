@@ -63,7 +63,7 @@
     #street_address-6,
     #country-6,
     #state_province-6 {
-      max-width: 200px;
+      max-width: 205px;
       @include respond-to(small) {
         max-width: 210px;
       }
@@ -77,6 +77,7 @@
     #frequency_unit,
     #recur_installments_num,
     .other_amount-section .label,
+    .billing_middle_name-section,
     .custom_42-section {
       display: none;
     }
