@@ -63,7 +63,10 @@
     #street_address-6,
     #country-6,
     #state_province-6 {
-      max-width: 210px;
+      max-width: 200px;
+      @include respond-to(small) {
+        max-width: 210px;
+      }
     }
 
     .payment_processor-section .content label {

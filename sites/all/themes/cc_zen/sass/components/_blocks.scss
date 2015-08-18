@@ -10,6 +10,14 @@
   }
 }
 
+.block-lessig-quote,
+.block-where-donation-goes {
+  display: none;
+  @include respond-to(small) {
+    display: block;
+  }
+}
+
 .block-where-donation-goes {
   img {
     width: 80%;
