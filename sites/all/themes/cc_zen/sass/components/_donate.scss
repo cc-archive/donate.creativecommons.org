@@ -63,7 +63,7 @@
     #street_address-6,
     #country-6,
     #state_province-6 {
-      max-width: 205px;
+      max-width: 203px;
       @include respond-to(small) {
         max-width: 210px;
       }
