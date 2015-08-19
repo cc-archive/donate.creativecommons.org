@@ -6,6 +6,7 @@
   #crm-container {
     .crm-group.custom_pre_profile-group,
     .billing_mode-group.credit_card_info-group,
+    .crm-group.payment_options-group,
     .billing_name_address-group {
       .crm-section {
         .label {
@@ -16,6 +17,7 @@
         .content {
           margin-left: 0;
         }
+        select,
         input {
           box-sizing: border-box;
           -moz-box-sizing: border-box;
@@ -32,29 +34,10 @@
           .content {
             margin-left: 30%;
           }
+          select,
           input {
             width: auto;
           }
-        }
-      }
-    }
-
-    .crm-group.payment_options-group {
-      .label {
-        float: left;
-        text-align: left;
-        width: 22%;
-      }
-      .content {
-        margin-left: 0;
-      }
-      @include respond-to(medium) {
-        .label {
-          text-align: right;
-          width: 27%;
-        }
-        .content {
-          margin-left: 30%;
         }
       }
     }
