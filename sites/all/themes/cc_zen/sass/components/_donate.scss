@@ -5,11 +5,50 @@
 
   #crm-container {
     .crm-group.custom_pre_profile-group,
-    .crm-group.payment_options-group,
     .billing_mode-group.credit_card_info-group,
     .billing_name_address-group {
       .crm-section {
         .label {
+          display: block;
+          text-align: left;
+          width: 100%;
+        }
+        .content {
+          margin-left: 0;
+        }
+        input {
+          box-sizing: border-box;
+          width: 100%;
+        }
+        @include respond-to(medium) {
+          .label {
+            float: left;
+            text-align: right;
+            display: inline;
+            width: 27%;
+          }
+          .content {
+            margin-left: 30%;
+          }
+          input {
+            width: auto;
+          }
+        }
+      }
+    }
+
+    .crm-group.payment_options-group {
+      .label {
+        float: left;
+        text-align: left;
+        width: 22%;
+      }
+      .content {
+        margin-left: 0;
+      }
+      @include respond-to(medium) {
+        .label {
+          text-align: right;
           width: 27%;
         }
         .content {
@@ -59,16 +98,6 @@
     .is_recur-section label {
       margin-left: 10px;
     }
-
-    #street_address-6,
-    #country-6,
-    #state_province-6 {
-      max-width: 203px;
-      @include respond-to(small) {
-        max-width: 210px;
-      }
-    }
-
     .payment_processor-section .content label {
       margin: 0 10px 0 5px;
     }
@@ -90,20 +119,29 @@
     }
 
     .crm-submit-buttons {
-      height: 40px;
+      height: 45px;
       margin: 0;
     }
 
     .crm-button_qf_Main_upload {
       width: 100%;
+      background: linear-gradient(color(green-medium-light), color(green-medium));
+      border-color: color(green-medium-dark);
+      border-radius: 6px;
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.15) inset, 0 1px 1px rgba(0, 0, 0, 0.075);
+      &:hover {
+        background: color(green-medium);
+      }
       @include respond-to(medium) {
         width: auto;
       }
     }
 
     .crm-button input.form-submit {
-      padding: 8px 10px;
       width: 100%;
+      text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
+      @include adjust-font-size-to(1.25 * $base-font-size, 1.15);
+      padding: 12px 22px;
     }
 
   }
