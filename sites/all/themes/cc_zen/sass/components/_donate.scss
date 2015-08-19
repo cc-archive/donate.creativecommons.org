@@ -42,6 +42,14 @@
       }
     }
 
+    .crm-group.payment_options-group {
+      .crm-section {
+        input {
+          width: auto;
+        }
+      } 
+    }
+
     .price_set-section,
     .is_recur-section,
     .custom_12-section {
@@ -110,7 +118,7 @@
 
     .crm-button_qf_Main_upload {
       width: 100%;
-      background: linear-gradient(color(green-medium-light), color(green-medium));
+      @include background-image(linear-gradient(color(green-medium-light), color(green-medium)));
       border-color: color(green-medium-dark);
       border-radius: 6px;
       box-shadow: 0 1px 0 rgba(255, 255, 255, 0.15) inset, 0 1px 1px rgba(0, 0, 0, 0.075);
