@@ -1,0 +1,95 @@
+// Collapsible fieldset
+//
+// Fieldsets with optional entry fields can be hidden with collapsed fieldsets.
+//
+// Markup: collapsible-fieldset.hbs
+//
+// .is-collapsed - The collapsed fieldset.
+//
+// Style guide: components.forms.collapsible-fieldset
+
+.collapsible-fieldset,
+%collapsible-fieldset {
+  position: relative;
+
+  &.is-collapsed,
+  &-is-collapsed {
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+    height: 1em;
+  }
+
+  .is-collapsed &__wrapper,
+  &-is-collapsed__wrapper {
+    display: none;
+  }
+
+  &__legend {
+    display: block;
+    padding-left: 15px;
+    background-image: inline-image('components/collapsible-fieldset/expanded.png');
+    @if support-legacy-browser(ie, '7') {
+      *background-image: image-url('components/collapsible-fieldset/expanded.png');
+    }
+    background-position: 5px 65%;
+    background-repeat: no-repeat;
+
+    @include rtl() {
+      padding-left: 0;
+      padding-right: 15px;
+      background-position: 98% 75%;
+    }
+  }
+
+  .is-collapsed &__legend,
+  &-is-collapsed__legend {
+    background-image: inline-image('components/collapsible-fieldset/collapsed.png');
+    @if support-legacy-browser(ie, '7') {
+      *background-image: image-url('components/collapsible-fieldset/collapsed.png');
+    }
+    background-position: 5px 50%;
+
+    @include rtl() {
+      background-image: inline-image('components/collapsible-fieldset/collapsed-rtl.png');
+      @if support-legacy-browser(ie, '7') {
+        *background-image: image-url('components/collapsible-fieldset/collapsed-rtl.png');
+      }
+      background-position: 98% 50%;
+    }
+  }
+
+  &__summary {
+    color: color(fieldset-summary);
+    font-size: .9em;
+    margin-left: .5em;
+  }
+}
+
+//
+// Drupal selectors.
+//
+
+.collapsible {
+  @extend %collapsible-fieldset;
+
+  .fieldset-legend {
+    @extend %collapsible-fieldset__legend;
+
+    .summary {
+      @extend %collapsible-fieldset__summary;
+    }
+  }
+
+  &.collapsed {
+    @extend %collapsible-fieldset-is-collapsed;
+
+    .fieldset-legend {
+      @extend %collapsible-fieldset-is-collapsed__legend;
+    }
+
+    .fieldset-wrapper {
+      @extend %collapsible-fieldset-is-collapsed__wrapper;
+    }
+  }
+}

@@ -198,7 +198,7 @@
                 <fieldset class="billing_name_address-group">
                   <legend>{ts}Billing Name and Address{/ts}</legend>
                     {if $profileAddressFields}
-                      <input type="checkbox" id="billingcheckbox" value=0> <label for="billingcheckbox">{ts}Billing Address is same as above{/ts}</label>
+                      <input type="checkbox" id="billingcheckbox" value=0> <label for="billingcheckbox">{ts}Billing Name and Address is the same as Shipping Address{/ts}</label>
                     {/if}
                     <div class="crm-section billing_name_address-section">
                         <div class="crm-section billingNameInfo-section">
@@ -245,7 +245,7 @@
                         </div>
                         {assign var=n value=billing_state_province_id-$bltID}
                         <div class="crm-section {$form.$n.name}-section">
-              <div class="label">{$form.$n.label}</div>
+              <div class="label">State</div>
                             <div class="content">{$form.$n.html|crmReplace:class:big}</div>
                             <div class="clear"></div>
                         </div>
@@ -266,9 +266,17 @@
 <script type="text/javascript">
 {literal}
 cj( function( ) {
-  cj('#billingcheckbox').click( function( ) {
+  cj('#billingcheckbox').change( function( ) {
     sameAddress( this.checked ); // need to only action when check not when toggled, can't assume desired behaviour
+    if ( this.checked ) {
+      cj('.page-civicrm-contribute-transact .crm-section.billing_name_address-section').hide();
+    } 
+    else { 
+      cj('.page-civicrm-contribute-transact .crm-section.billing_name_address-section').show();
+    } 
   });
+  cj('#billingcheckbox').prop('checked', true).trigger('change');
+  
 });
 
 function sameAddress( setValue ) {
