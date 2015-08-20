@@ -49,7 +49,7 @@ ga('ecommerce:addTransaction', {
 
 {/literal}
 
-id: "{$Contribution.id}",
+id: "{$trxn_id}",
 affiliation: '',
 revenue: "{$amount}",
 {literal}
@@ -58,7 +58,7 @@ tax: '0' });
 
 ga('ecommerce:addItem', {
 {/literal}
-id: "{$Contribution.id}",
+id: "{$trxn_id}",
 sku: 'Donation',
 name: "{$form.custom_42.value}",
 category: '',
