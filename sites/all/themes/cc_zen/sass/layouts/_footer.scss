@@ -1,0 +1,22 @@
+
+$zen-auto-include-grid-item-base: false;
+@if $zen-switch-direction == false {
+  .footer__wrapper {
+    @include zen-grid-item-base();
+    @include zen-grid-container();
+  }
+}
+
+@include respond-to(medium) {
+  $zen-columns: 2 !global;
+  $zen-gutters: 30px !global;
+  .region-footer-first {
+    @include zen-grid-item-base();
+    @include zen-grid-item(1, 1);
+  }
+  .region-footer-second {
+    @include zen-grid-item-base();
+    @include zen-grid-item(1, 2);
+  }
+}
+
