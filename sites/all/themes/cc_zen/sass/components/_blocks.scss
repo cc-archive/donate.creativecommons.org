@@ -1,0 +1,52 @@
+.block-donate-page {
+  p, ul {
+    @include adjust-font-size-to(.89 * $base-font-size);
+  }
+  h2 {
+    @include adjust-font-size-to(1.35 * $base-font-size, 1.45);
+  }
+  h3 {
+    @include adjust-font-size-to(1.17 * $base-font-size, 1.27);
+  }
+}
+
+.block-lessig-quote,
+.block-where-donation-goes {
+  display: none;
+  @include respond-to(small) {
+    display: block;
+  }
+}
+
+.block-where-donation-goes {
+  img {
+    width: 80%;
+    height: auto;
+  }
+} 
+
+.block-pingdom {
+  display: none;
+}
+
+.sidebar .block {
+  background-color: color(grey-light);
+  border-color: color(grey-medium-light);
+  margin: 0 0 20px;
+  padding: 15px 20px;
+  font-family: $helvetica;
+  color: color(grey-dark);
+  h2 {
+    border-bottom: 1px solid color(grey-medium);
+  }
+}
+
+.block-donation-kickstarter {
+  padding-bottom: 20px;
+  border-bottom: 1px solid color(grey-medium);
+  p {
+    margin-top: 0;
+  }
+}
+
+

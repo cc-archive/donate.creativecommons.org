@@ -1,0 +1,141 @@
+.page-civicrm-contribute-transact {
+  .main-content {
+    color: color(grey-dark);
+  }
+
+  #crm-container {
+    .crm-group.custom_pre_profile-group,
+    .billing_mode-group.credit_card_info-group,
+    .crm-group.payment_options-group,
+    .billing_name_address-group {
+      .crm-section {
+        .label {
+          display: block;
+          text-align: left;
+          width: 100%;
+        }
+        .content {
+          margin-left: 0;
+        }
+        select,
+        input {
+          box-sizing: border-box;
+          -moz-box-sizing: border-box;
+          -webkit-box-sizing: border-box;
+          width: 100%;
+        }
+        @include respond-to(medium) {
+          .label {
+            float: left;
+            text-align: right;
+            display: inline;
+            width: 27%;
+          }
+          .content {
+            margin-left: 30%;
+          }
+          select,
+          input {
+            width: auto;
+          }
+        }
+      }
+    }
+
+    .crm-group.payment_options-group {
+      .crm-section {
+        input {
+          width: auto;
+        }
+      } 
+    }
+
+    .price_set-section,
+    .is_recur-section,
+    .custom_12-section {
+      .label {
+        width: 0;
+      }
+      .content {
+        margin-left: 5%;
+      }
+    }
+
+    .group-section .content {
+      margin-top: 20px;
+      margin-left: 5%;
+    }
+
+    .other_amount-section input {
+      margin: -20px 0 0 20px;
+      width: 60px;
+    }
+
+    .contribution_amount-content {
+      .price-set-row {
+        margin-bottom: 20px;
+      }
+
+      .price-set-option-content label {
+        color: color(green);
+        @include adjust-font-size-to(1.75 * $base-font-size, 1.15);
+        font-weight: bold;
+        padding-left: 10px;
+      }
+
+      .price-set-option-content input.form-radio {
+        vertical-align: top;
+      }
+    }
+
+    .is_recur-section label {
+      margin-left: 10px;
+    }
+    .payment_processor-section .content label {
+      margin: 0 10px 0 5px;
+    }
+
+    .is_recur-section p .description,
+    #frequency_unit,
+    #recur_installments_num,
+    .other_amount-section .label,
+    .billing_middle_name-section,
+    .custom_42-section {
+      display: none;
+    }
+
+    .custom_post_profile-group {
+      .crm-section.group-section .description {
+        @include adjust-font-size-to(1 * $base-font-size);
+        color: color(grey-dark);
+      }
+    }
+
+    .crm-submit-buttons {
+      height: 45px;
+      margin: 0;
+    }
+
+    .crm-button_qf_Main_upload {
+      width: 100%;
+      @include background-image(linear-gradient(color(green-medium-light), color(green-medium)));
+      border-color: color(green-medium-dark);
+      border-radius: 6px;
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.15) inset, 0 1px 1px rgba(0, 0, 0, 0.075);
+      &:hover {
+        background: color(green-medium);
+      }
+      @include respond-to(medium) {
+        width: auto;
+      }
+    }
+
+    .crm-button input.form-submit {
+      width: 100%;
+      text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
+      @include adjust-font-size-to(1.25 * $base-font-size, 1.15);
+      padding: 12px 22px;
+    }
+
+  }
+}

@@ -1,0 +1,60 @@
+.footer__wrapper {
+  clear: both;
+  padding: 40px 0;
+  background: color(green-light);
+}
+
+.region-footer {
+  @extend %container-default;
+  li, p, a {
+    color: color(white);
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  } 
+}
+
+.region-footer-first {
+  .menu {
+    padding: 0 0 0 15px;
+    @include respond-to(medium) {
+      padding: 0;
+    }
+  }
+  .menu__item {
+    display: inline-block;
+    padding: 0.5em 0;
+    margin: 0.5em 0;
+    li, p, a {
+      @include adjust-font-size-to(1 * $base-font-size);
+    }
+    a {
+      padding-left: 10px;
+      padding-right: 10px;
+      border-right: 1px solid color(white-transparent);
+    }
+    &.first a {
+      padding-left: 0;
+    }
+    &.last a {
+      border-right: none;
+    }
+  }
+}
+
+.region-footer-second {
+  li, p, a {
+    @include adjust-font-size-to(.89 * $base-font-size, 1);
+  }
+  #block-block-6 {
+    float: right;
+    max-width: 170px;
+    padding-right: 15px;
+    @include respond-to(medium) {
+      padding-right: 0;
+    }
+  }
+}
+

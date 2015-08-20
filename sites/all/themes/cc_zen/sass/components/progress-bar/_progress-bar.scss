@@ -1,0 +1,113 @@
+// Dependencies.
+// @TODO An image dependency on throbber.gif? This is a code smell.
+@import 'components/autocomplete/autocomplete';
+
+// Progress bar
+//
+// @TODO
+//
+// Style guide: components.progress-bar
+
+.progress-bar,
+%progress-bar {
+  font-weight: bold;
+
+  &--disabled {
+    @include rtl() {
+      float: right;
+    }
+  }
+
+  &__bar {
+    @include border-radius(3px);
+    margin: 0 .2em;
+    border: 1px solid color(progress-bar-border);
+    background-color: color(progress-bar-bg);
+  }
+
+  &__fill {
+    height: 1.5em;
+    width: 5px;
+    background: color(progress-bar) image-url('components/progress-bar/progress.gif') repeat 0 0;
+  }
+
+  &__percentage {
+    float: right;
+
+    @include rtl() {
+      float: left;
+    }
+  }
+
+  &--ajax {
+    display: inline-block;
+
+    @include rtl() {
+      float: right;
+    }
+  }
+
+  &--ajax__throbber {
+    background: image-url('components/autocomplete/throbber.gif') no-repeat 0 -18px transparent;
+    float: left;
+    height: 15px;
+    margin: 2px;
+    width: 15px;
+
+    @include rtl() {
+      float: right;
+    }
+
+    tr & {
+      margin: 0 2px;
+    }
+  }
+
+  &--ajax__message {
+    padding-left: 20px;
+  }
+
+  &--ajax__bar {
+    width: 16em;
+  }
+}
+
+//
+// Drupal selectors.
+//
+
+.progress {
+  @extend %progress-bar;
+
+  .bar {
+    @extend %progress-bar__bar;
+  }
+
+  .filled {
+    @extend %progress-bar__fill;
+  }
+
+  .percentage {
+    @extend %progress-bar__percentage;
+  }
+}
+
+.progress-disabled {
+  @extend %progress-bar--disabled;
+}
+
+.ajax-progress {
+  @extend %progress-bar--ajax;
+
+  .throbber {
+    @extend %progress-bar--ajax__throbber;
+  }
+
+  .message {
+    @extend %progress-bar--ajax__message;
+  }
+}
+
+.ajax-progress-bar {
+  @extend %progress-bar--ajax__bar;
+}
