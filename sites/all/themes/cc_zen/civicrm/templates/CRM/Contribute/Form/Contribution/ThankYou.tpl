@@ -29,8 +29,6 @@
 
 {include file="CRM/common/TrackingFields.tpl"}
 
-{crmAPI var="Contribution" entity="Contribution" action="get" trxn_id=$trxn_id}
-
 <!-- Begin Google Analytics --> 
 
 {literal}
@@ -48,8 +46,11 @@ ga('require', 'ecommerce', 'ecommerce.js');
 ga('ecommerce:addTransaction', {
 
 {/literal}
-
+{if $trxn_id}
 id: "{$trxn_id}",
+{else}
+id: "{$qfKey}",
+{/if}
 affiliation: '',
 revenue: "{$amount}",
 {literal}
@@ -58,7 +59,11 @@ tax: '0' });
 
 ga('ecommerce:addItem', {
 {/literal}
+{if $trxn_id}
 id: "{$trxn_id}",
+{else}
+id: "{$qfKey}",
+{/if}
 sku: 'Donation',
 name: "{$form.custom_42.value}",
 category: '',
