@@ -22,6 +22,7 @@ dependencies[] = file_entity
 dependencies[] = giantrabbit
 dependencies[] = googleanalytics
 dependencies[] = gr_tpl_tweaks
+dependencies[] = gr_wysiwyg
 dependencies[] = help
 dependencies[] = image
 dependencies[] = jquery_update
