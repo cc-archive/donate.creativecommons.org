@@ -262,6 +262,39 @@
             {/if}
     </div>
 
+{if $form.credit_card_exp_date}
+<script type="text/javascript">
+{literal}
+cj( function( ) {
+  var month_map = {
+    "Jan":"01",
+    "Feb":"02",
+    "Mar":"03",
+    "Apr":"04",
+    "May":"05",
+    "Jun":"06",
+    "Jul":"07",
+    "Aug":"08",
+    "Sep":"09",
+    "Oct":"10",
+    "Nov":"11",
+    "Dec":"12"
+  };
+
+  cj( ".form-date" ).find('option').text(function(index, originalText) {
+    for (var month in month_map) {
+      if (originalText.indexOf(month) > -1) {
+        return originalText.replace(month, month_map[month]);
+      }
+    }
+    return originalText;
+  });
+});
+
+{/literal}
+</script>
+{/if}
+
 {if $profileAddressFields}
 <script type="text/javascript">
 {literal}
