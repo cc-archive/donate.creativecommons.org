@@ -66,25 +66,64 @@
       margin-left: 5%;
     }
 
-    .other_amount-section input {
-      margin: -20px 0 0 20px;
-      width: 60px;
+    .price-set-row,
+    .crm-button_qf_Main_upload {
+      @include background-image(linear-gradient(color(green-pale), color(green)));
+      border: 1px solid color(green);
+      border-radius: 6px;
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.15) inset, 0 1px 1px rgba(0, 0, 0, 0.075);
+      &:hover {
+        background: color(green-pale);
+      }
     }
 
-    .contribution_amount-content {
-      .price-set-row {
-        margin-bottom: 20px;
+
+    .price-set-row {
+      width: 140px;
+      height: 60px;
+      margin-right: 15px;
+      margin-bottom: 20px;
+      &.selected-amount {
+        background: color(grey-light);
+        border: solid 2px color(green);
+        &:hover {
+          background: color(grey-light);
+        }
+        label {
+          color: color(green);
+        }
+      }
+      @include respond-to(medium) {
+        float: left;  
       }
 
-      .price-set-option-content label {
-        color: color(green);
+      .price-set-option-content {
+        display: table;
+        margin: auto;
+        padding-top: 20px;
+      }
+      input[type=radio] {
+        display: none;
+      }
+      label {
+        cursor: pointer;
+        padding: 6px 8px;
+        color: color(white);
         @include adjust-font-size-to(1.75 * $base-font-size, 1.15);
         font-weight: bold;
         padding-left: 10px;
       }
+    }
 
-      .price-set-option-content input.form-radio {
-        vertical-align: top;
+    .other_amount-section {
+      margin-left: 5%;
+      input {
+        width: 140px;
+        margin-left: 80px;
+      }
+      label {
+        display: block;
+        width: 90px; 
       }
     }
 
@@ -98,7 +137,6 @@
     .is_recur-section p .description,
     #frequency_unit,
     #recur_installments_num,
-    .other_amount-section .label,
     .billing_middle_name-section,
     .custom_42-section {
       display: none;
@@ -117,14 +155,7 @@
     }
 
     .crm-button_qf_Main_upload {
-      width: 100%;
-      @include background-image(linear-gradient(color(green-medium-light), color(green-medium)));
-      border-color: color(green-medium-dark);
-      border-radius: 6px;
-      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.15) inset, 0 1px 1px rgba(0, 0, 0, 0.075);
-      &:hover {
-        background: color(green-medium);
-      }
+      width: 100%;  
       @include respond-to(medium) {
         width: auto;
       }

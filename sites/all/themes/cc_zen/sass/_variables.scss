@@ -143,13 +143,13 @@ $chroma: add-colors((
   yellow:                 #ff0,
   yellow-dark:            #ed5,
 
-  green:                  #627e37,
+  green:                  #88A049,
   green-pale:             #8fbb0d,
-  green-light:            #98c807,
-  green-medium-light:     #5cb85c,
-  green-medium:           #419641,
-  green-medium-dark:      #3e8f3e,
-  green-dark:             #6b8925,
+  green-light:            #98c807, // unused
+  green-medium-light:     #5cb85c, // unused
+  green-medium:           #419641, // unused
+  green-medium-dark:      #3e8f3e, // unused
+  green-dark:             #6b8925, // header gradient bottom
   ));
 
 // Define color names for functional uses.
