@@ -265,7 +265,7 @@
 {if $form.credit_card_exp_date}
 <script type="text/javascript">
 {literal}
-cj( function( ) {
+cj(function() {
   var month_map = {
     "Jan":"01",
     "Feb":"02",
@@ -281,7 +281,7 @@ cj( function( ) {
     "Dec":"12"
   };
 
-  cj( ".form-date" ).find('option').text(function(index, originalText) {
+  cj(".credit_card_exp_date-section select.form-date").find('option').text(function(index, originalText) {
     for (var month in month_map) {
       if (originalText.indexOf(month) > -1) {
         return originalText.replace(month, month_map[month]);
@@ -298,10 +298,10 @@ cj( function( ) {
 {if $profileAddressFields}
 <script type="text/javascript">
 {literal}
-cj( function( ) {
-  cj('#billingcheckbox').change( function( ) {
-    sameAddress( this.checked ); // need to only action when check not when toggled, can't assume desired behaviour
-    if ( this.checked ) {
+cj(function() {
+  cj('#billingcheckbox').change(function() {
+    sameAddress(this.checked); // need to only action when check not when toggled, can't assume desired behaviour
+    if (this.checked) {
       cj('.page-civicrm-contribute-transact .crm-section.billing_name_address-section').hide();
     } 
     else { 
