@@ -76,13 +76,13 @@
         background: color(green-pale);
       }
     }
-
-
+    
     .price-set-row {
-      width: 140px;
+      width: 160px;
       height: 60px;
       margin-right: 15px;
       margin-bottom: 20px;
+      float: left;
       &.selected-amount {
         background: color(grey-light);
         border: solid 2px color(green);
@@ -92,9 +92,6 @@
         label {
           color: color(green);
         }
-      }
-      @include respond-to(medium) {
-        float: left;  
       }
 
       .price-set-option-content {
@@ -117,13 +114,30 @@
 
     .other_amount-section {
       margin-left: 5%;
-      input {
-        width: 140px;
-        margin-left: 80px;
-      }
-      label {
+      .label {
         display: block;
-        width: 90px; 
+        width: 100%;
+        label {
+          float: left;
+        }
+      }
+      .content {
+        margin-left: 0;
+      }
+      input {
+        width: 160px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+      }
+      @include respond-to(medium) {
+        .label {
+          display: table;
+          width: auto;
+          float: left;
+          text-align: right;
+          margin-right: 10px;
+        }
       }
     }
 
