@@ -19,12 +19,12 @@
     attach: function (context, settings) {
 
       $('.page-civicrm-contribute-transact .email-5-section').insertAfter('.last_name-section');
-      $('.page-civicrm-contribute-transact label[for=CIVICRM_QFID_0_16]').text('Other');
+      $('.page-civicrm-contribute-transact .contribution_amount-section input[value=0]').next('label').text('Other');
       $('.page-civicrm-contribute-transact .contribution_amount-content .price-set-row').click(function() {
         $(this).addClass('selected-amount').siblings().removeClass('selected-amount');
       });
       $('.page-civicrm-contribute-transact .form-submit').val('Process Contribution');
-      $('.page-civicrm-contribute-transact label[for=CIVICRM_QFID_1_20]').text('I want to contribute this amount monthly.');
+      $('.page-civicrm-contribute-transact .is_recur-section input[value=1]').next('label').text('I want to contribute this amount monthly.');
       $('.page-civicrm-contribute-transact .is_recur-section .content p strong').contents().filter(function() {
         return this.nodeType === 3;
       }).remove();
