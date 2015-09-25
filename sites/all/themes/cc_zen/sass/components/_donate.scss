@@ -117,8 +117,12 @@
       .label {
         display: block;
         width: 100%;
+        margin-bottom: 5px;
         label {
           float: left;
+          @include adjust-font-size-to(1.75 * $base-font-size, 1.15);
+          font-weight: bold;
+          color: color(green);
         }
       }
       .content {
@@ -126,6 +130,7 @@
       }
       input {
         width: 160px;
+        padding: 7px;
         box-sizing: border-box;
         -moz-box-sizing: border-box;
         -webkit-box-sizing: border-box;
@@ -137,6 +142,7 @@
           float: left;
           text-align: right;
           margin-right: 10px;
+          margin-top: 7px;
         }
       }
     }

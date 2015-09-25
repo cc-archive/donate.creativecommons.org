@@ -20,8 +20,15 @@
 
       $('.page-civicrm-contribute-transact .email-5-section').insertAfter('.last_name-section');
       $('.page-civicrm-contribute-transact .contribution_amount-section input[value=0]').next('label').text('Other');
+      $('.page-civicrm-contribute-transact .other_amount-section').hide();
       $('.page-civicrm-contribute-transact .contribution_amount-content .price-set-row').click(function() {
         $(this).addClass('selected-amount').siblings().removeClass('selected-amount');
+        if ($(this).find('input[value=0]').length > 0) {
+          $('.page-civicrm-contribute-transact .other_amount-section').show();
+        }
+        else {
+          $('.page-civicrm-contribute-transact .other_amount-section').hide();
+        }
       });
       $('.page-civicrm-contribute-transact .form-submit').val('Process Contribution');
       $('.page-civicrm-contribute-transact .is_recur-section input[value=1]').next('label').text('I want to contribute this amount monthly.');
