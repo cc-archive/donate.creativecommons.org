@@ -18,6 +18,7 @@
   Drupal.behaviors.my_custom_behavior = {
     attach: function (context, settings) {
 
+      $('.ui-icon-print').hide();
       $('.page-civicrm-contribute-transact .email-5-section').insertAfter('.last_name-section');
       $('.page-civicrm-contribute-transact .contribution_amount-section input[value=0]').next('label').text('Other');
       $('.page-civicrm-contribute-transact .other_amount-section').hide();
