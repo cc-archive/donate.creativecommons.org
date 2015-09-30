@@ -30,6 +30,7 @@
           $('.page-civicrm-contribute-transact .other_amount-section').hide();
         }
       });
+      $('.page-civicrm-contribute-transact .premiums_select-group input[value=no_thanks]').attr('checked', 'checked');
       $('.page-civicrm-contribute-transact .form-submit').val('Process Contribution');
       $('.page-civicrm-contribute-transact .is_recur-section input[value=1]').next('label').text('I want to contribute this amount monthly.');
       $('.page-civicrm-contribute-transact .is_recur-section .content p strong').contents().filter(function() {
