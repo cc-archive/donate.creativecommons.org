@@ -75,6 +75,10 @@ html.js input {
   }
 }
 
+.page-civicrm input#sort_name_navigation {
+  color: color(black);
+}
+
 // scss-lint:disable IdSelector
 #autocomplete {
   @extend %autocomplete__list-wrapper;
