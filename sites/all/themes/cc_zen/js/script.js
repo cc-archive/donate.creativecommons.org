@@ -29,7 +29,8 @@
           $('.page-civicrm-contribute-transact .other_amount-section').hide();
         }
       });
-
+      
+      $('.page-civicrm-contribute-transact .premiums_select-group input[value=no_thanks]').parent().parent().insertBefore('.page-civicrm-contribute-transact .premiums_select-group tr:first');
       if (!$('.page-civicrm-contribute-transact .premiums_select-group input').is(':checked')) {
         $('.page-civicrm-contribute-transact .premiums_select-group input[value=no_thanks]').attr('checked', 'checked');
 	$('.page-civicrm-contribute-transact .custom_pre_profile-group').hide();
