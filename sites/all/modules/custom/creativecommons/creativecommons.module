@@ -21,3 +21,24 @@ function creativecommons_civicrm_buildForm($formName, &$form) {
     $form->setDefaults( $defaults );
   }
 }
+
+function creativecommons_civicrm_validateForm($formName, &$fields, &$form, &$errors) {
+  if ($formName == 'CRM_Contribute_Form_Contribution_Main') {
+    if ($fields['selectProduct'] != 'no_thanks') {
+      $shipping_fields = array(
+	'first_name',
+	'last_name',
+	'street_address-6',
+	'city-6',
+	'country-6',
+	'state-province-6',
+	'postal_code-6'
+      );
+      foreach ($shipping_fields as $shipping_field) {
+	if (empty($fields[$shipping_field])) {
+	  dpm('fail validation', $shipping_field);
+	}
+      }
+    }
+  }
+}

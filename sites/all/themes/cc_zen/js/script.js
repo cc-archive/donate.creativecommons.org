@@ -18,7 +18,6 @@
   Drupal.behaviors.my_custom_behavior = {
     attach: function (context, settings) {
 
-      $('.page-civicrm-contribute-transact .email-5-section').insertAfter('.last_name-section');
       $('.page-civicrm-contribute-transact .contribution_amount-section input[value=0]').next('label').text('Other');
       $('.page-civicrm-contribute-transact .other_amount-section').hide();
       $('.page-civicrm-contribute-transact .contribution_amount-content .price-set-row').click(function() {
@@ -30,9 +29,25 @@
           $('.page-civicrm-contribute-transact .other_amount-section').hide();
         }
       });
+
       if (!$('.page-civicrm-contribute-transact .premiums_select-group input').is(':checked')) {
         $('.page-civicrm-contribute-transact .premiums_select-group input[value=no_thanks]').attr('checked', 'checked');
+	$('.page-civicrm-contribute-transact .custom_pre_profile-group').hide();
       }
+      $('.page-civicrm-contribute-transact .premiums_select-group input').click( function() {
+	if ($(this).val() == 'no_thanks') {
+	  $('.page-civicrm-contribute-transact .custom_pre_profile-group').hide();
+	}
+	else {
+	  $('.page-civicrm-contribute-transact .custom_pre_profile-group').show();
+	  $('.page-civicrm-contribute-transact .custom_pre_profile-group label').each( function() {
+	    if ($(this).find('*').length == 0) {
+	      $(this).append('<span class="crm-marker" title="This field is required."> *</span>');
+	    }
+	  });
+	}	  
+      });
+
       $('.page-civicrm-contribute-transact .form-submit').val('Process Contribution');
       $('.page-civicrm-contribute-transact .is_recur-section input[value=1]').next('label').text('I want to contribute this amount monthly.');
       $('.page-civicrm-contribute-transact .is_recur-section .content p strong').contents().filter(function() {
@@ -41,7 +56,7 @@
 
       $("table.selector.crm-profile-tagsandgroups input[type=checkbox]").each(function(idx,obj){
         $(obj).attr('checked','checked') ;
-      }) ;
+      });
     }
   };
 
