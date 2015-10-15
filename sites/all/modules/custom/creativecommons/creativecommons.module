@@ -22,23 +22,24 @@ function creativecommons_civicrm_buildForm($formName, &$form) {
   }
 }
 
-function creativecommons_civicrm_validateForm($formName, &$fields, &$form, &$errors) {
+function creativecommons_civicrm_validateForm($formName, &$fields, &$files, &$form, &$errors) {
   if ($formName == 'CRM_Contribute_Form_Contribution_Main') {
     if ($fields['selectProduct'] != 'no_thanks') {
       $shipping_fields = array(
-	'first_name',
-	'last_name',
-	'street_address-6',
-	'city-6',
-	'country-6',
-	'state-province-6',
-	'postal_code-6'
+	'first_name' => 'First Name',
+	'last_name' => 'Last Name',
+	'street_address-6' => 'Street Address',
+	'city-6' => 'City',
+	'country-6' => 'Country',
+	'state_province-6' => 'State',
+	'postal_code-6' => 'Postal Code'
       );
-      foreach ($shipping_fields as $shipping_field) {
-	if (empty($fields[$shipping_field])) {
-	  dpm('fail validation', $shipping_field);
+      foreach ($shipping_fields as $key=>$value) {
+	if (empty($fields[$key])) {
+	  $form->setElementError($key, $value . ' is a required field.');
 	}
       }
     }
   }
+  return;
 }
