@@ -20,7 +20,8 @@
 
       function showHideShippingFields() {
 	var value = premiumField.find('input:checked').val();
-	if (value == 'no_thanks') {
+	var payment = paymentField.find('input:checked').val();
+	if (value == 'no_thanks' && payment != '11') {
 	  $('.page-civicrm-contribute-transact .custom_pre_profile-group').hide();
 	}
 	else {
@@ -41,6 +42,7 @@
       var premiumField = $('.page-civicrm-contribute-transact .premiums_select-group');
       var amountField = $('.page-civicrm-contribute-transact .contribution_amount-content .price-set-row');
       var recurringFields = $('.page-civicrm-contribute-transact .is_recur-section');
+      var paymentField = $('.page-civicrm-contribute-transact .payment_processor-section');
 
       // Premium Fields
       if (premiumField.find('input:checked').length == 0) {
@@ -51,6 +53,9 @@
 
       // Shipping Fields
       premiumField.click(function() {
+	showHideShippingFields();
+      });
+      paymentField.click(function() {
 	showHideShippingFields();
       });
 
