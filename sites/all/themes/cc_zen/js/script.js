@@ -44,6 +44,9 @@
       var recurringFields = $('.page-civicrm-contribute-transact .is_recur-section');
       var paymentField = $('.page-civicrm-contribute-transact .payment_processor-section');
 
+      // Email Field
+      $('<fieldset><legend>Contact Information</legend>').insertBefore('.page-civicrm-contribute-transact .email-5-section');
+
       // Premium Fields
       if (premiumField.find('input:checked').length == 0) {
 	premiumField.find('input[value=no_thanks]').attr('checked', 'checked');
