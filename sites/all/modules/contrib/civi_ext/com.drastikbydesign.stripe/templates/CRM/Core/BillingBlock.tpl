@@ -309,7 +309,9 @@ cj(function() {
     } 
   });
   cj('#billingcheckbox').prop('checked', true).trigger('change');
-  
+  cj('.page-civicrm-contribute-transact .custom_pre_profile-group').find('input').keyup(function() {
+    cj('#billingcheckbox').trigger('change');
+  });
 });
 
 function sameAddress( setValue ) {
