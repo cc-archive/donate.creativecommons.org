@@ -70,6 +70,18 @@
 
       // Amount Fields
       amountField.find('input[value=0]').next('label').text('Other');
+      amountField.find('label').each(function() {
+	$(this).text(function() {
+	  return $(this).text().replace('.00', '');
+	});
+      });
+
+cj('.page-civicrm-contribute-transact .contribution_amount-content .price-set-row').find('label').each(function() {
+    cj(this).text(function() {
+          return cj(this).text().replace('.00', '');
+	    });
+});
+
       amountField.find('input:checked').parent().parent().addClass('selected-amount');
       showHideOtherAmountField();
       amountField.click(function() {
