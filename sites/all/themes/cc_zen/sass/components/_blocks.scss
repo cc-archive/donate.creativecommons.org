@@ -13,7 +13,7 @@
 .block-lessig-quote,
 .block-where-donation-goes {
   display: none;
-  @include respond-to(small) {
+  @include respond-to(medium) {
     display: block;
   }
 }

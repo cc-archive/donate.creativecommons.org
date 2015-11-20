@@ -18,16 +18,88 @@
   Drupal.behaviors.my_custom_behavior = {
     attach: function (context, settings) {
 
-      $('.page-civicrm-contribute-transact .email-5-section').insertAfter('.last_name-section');
+      function showHideShippingFields() {
+	var value = premiumField.find('input:checked').val();
+	var payment = paymentField.find('input:checked').val();
+	if (value == 'no_thanks' && payment != '11') {
+	  $('.page-civicrm-contribute-transact .custom_pre_profile-group').hide();
+	}
+	else {
+	  $('.page-civicrm-contribute-transact .custom_pre_profile-group').show();
+	}
+      }
+
+      function showHideOtherAmountField() {
+	var value = amountField.find('input:checked').val();
+	if (value == '0') {
+	  $('.page-civicrm-contribute-transact .other_amount-section').show();
+	}
+	else {
+	  $('.page-civicrm-contribute-transact .other_amount-section').hide();
+	}
+      }
+
+      var premiumField = $('.page-civicrm-contribute-transact .premiums_select-group');
+      var amountField = $('.page-civicrm-contribute-transact .contribution_amount-content .price-set-row');
+      var recurringFields = $('.page-civicrm-contribute-transact .is_recur-section');
+      var paymentField = $('.page-civicrm-contribute-transact .payment_processor-section');
+
+      // Email Field
+      $('<fieldset><legend>Contact Information</legend>').insertBefore('.page-civicrm-contribute-transact .email-5-section');
+
+      // Premium Fields
+      if (premiumField.find('input:checked').length == 0) {
+	premiumField.find('input[value=no_thanks]').attr('checked', 'checked');
+	showHideShippingFields();
+      }
+      premiumField.find('input[value=no_thanks]').parent().parent().insertBefore('.page-civicrm-contribute-transact .premiums_select-group tr:first');
+
+      // Shipping Fields
+      premiumField.click(function() {
+	showHideShippingFields();
+      });
+      paymentField.click(function() {
+	showHideShippingFields();
+      });
+
+      $('.page-civicrm-contribute-transact .custom_pre_profile-group').find('label').each(function() {
+	if ($(this).find('*').length == 0) {
+	  $(this).append('<span class="crm-marker" title="This field is required."> *</span>');
+	}
+      });
+
+      // Amount Fields
+      amountField.find('input[value=0]').next('label').text('Other');
+      amountField.find('label').each(function() {
+	$(this).text(function() {
+	  return $(this).text().replace('.00', '');
+	});
+      });
+
+cj('.page-civicrm-contribute-transact .contribution_amount-content .price-set-row').find('label').each(function() {
+    cj(this).text(function() {
+          return cj(this).text().replace('.00', '');
+	    });
+});
+
+      amountField.find('input:checked').parent().parent().addClass('selected-amount');
+      showHideOtherAmountField();
+      amountField.click(function() {
+	amountField.find('input:checked').parent().parent().addClass('selected-amount').siblings().removeClass('selected-amount');
+	showHideOtherAmountField();
+      });
+      
       $('.page-civicrm-contribute-transact .form-submit').val('Process Contribution');
-      $('.page-civicrm-contribute-transact label[for=CIVICRM_QFID_1_20]').text('I want to contribute this amount monthly.');
-      $('.page-civicrm-contribute-transact .is_recur-section .content p strong').contents().filter(function() {
-        return this.nodeType === 3;
+
+      // Recurring Fields
+      recurringFields.find('input[value=1]').next('label').text('I want to contribute this amount monthly.');
+      recurringFields.find('.content p strong').contents().filter(function() {
+	  return this.nodeType === 3;
       }).remove();
 
-      $("table.selector.crm-profile-tagsandgroups input[type=checkbox]").each(function(idx,obj){
-        $(obj).attr('checked','checked') ;
-      }) ;
+      $('table.selector.crm-profile-tagsandgroups input[type=checkbox]').each(function(idx,obj){
+	$(obj).attr('checked','checked') ;
+      });
     }
   };
 

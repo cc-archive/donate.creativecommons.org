@@ -143,7 +143,7 @@ $chroma: add-colors((
   yellow:                 #ff0,
   yellow-dark:            #ed5,
 
-  green:                  #627e37,
+  green:                  #88A049,
   green-pale:             #8fbb0d,
   green-light:            #98c807,
   green-medium-light:     #5cb85c,
@@ -230,7 +230,7 @@ $chroma-active-scheme: 'functional';
 // Style guide: sass.variables.breakpoints
 
 $breakpoints: (
-  'small':        (777px,       'no-query' true),
+  'small':        (416px,       'no-query' true),
   'medium':       (777px,       'no-query' true),
   'medium-only':  (777px 998px, 'no-query' true),
   'large':        (999px,       'no-query' true),

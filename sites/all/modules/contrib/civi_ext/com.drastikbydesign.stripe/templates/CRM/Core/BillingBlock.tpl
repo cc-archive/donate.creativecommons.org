@@ -262,13 +262,46 @@
             {/if}
     </div>
 
+{if $form.credit_card_exp_date}
+<script type="text/javascript">
+{literal}
+cj(function() {
+  var month_map = {
+    "Jan":"01",
+    "Feb":"02",
+    "Mar":"03",
+    "Apr":"04",
+    "May":"05",
+    "Jun":"06",
+    "Jul":"07",
+    "Aug":"08",
+    "Sep":"09",
+    "Oct":"10",
+    "Nov":"11",
+    "Dec":"12"
+  };
+
+  cj(".credit_card_exp_date-section select.form-date").find('option').text(function(index, originalText) {
+    for (var month in month_map) {
+      if (originalText.indexOf(month) > -1) {
+        return originalText.replace(month, month_map[month]);
+      }
+    }
+    return originalText;
+  });
+});
+
+{/literal}
+</script>
+{/if}
+
 {if $profileAddressFields}
 <script type="text/javascript">
 {literal}
-cj( function( ) {
-  cj('#billingcheckbox').change( function( ) {
-    sameAddress( this.checked ); // need to only action when check not when toggled, can't assume desired behaviour
-    if ( this.checked ) {
+cj(function() {
+  cj('#billingcheckbox').change(function() {
+    sameAddress(this.checked); // need to only action when check not when toggled, can't assume desired behaviour
+    if (this.checked) {
       cj('.page-civicrm-contribute-transact .crm-section.billing_name_address-section').hide();
     } 
     else { 
@@ -276,7 +309,11 @@ cj( function( ) {
     } 
   });
   cj('#billingcheckbox').prop('checked', true).trigger('change');
-  
+  cj('.page-civicrm-contribute-transact .custom_pre_profile-group').find('input').change(function() {
+    if (cj('#billingcheckbox').prop('checked', true)) {
+      cj('#billingcheckbox').trigger('change');
+    }
+  });
 });
 
 function sameAddress( setValue ) {
