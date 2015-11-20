@@ -309,7 +309,11 @@ cj(function() {
     } 
   });
   cj('#billingcheckbox').prop('checked', true).trigger('change');
-  
+  cj('.page-civicrm-contribute-transact .custom_pre_profile-group').find('input').change(function() {
+    if (cj('#billingcheckbox').prop('checked', true)) {
+      cj('#billingcheckbox').trigger('change');
+    }
+  });
 });
 
 function sameAddress( setValue ) {

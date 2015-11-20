@@ -1,0 +1,32 @@
+/* CC requested that field labels appear above fields on small screens */
+@mixin mobile-labels {
+  .label {
+    display: block;
+    text-align: left;
+    width: 100%;
+  }
+  .content {
+    margin-left: 0;
+  }
+  input {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    width: 100%;
+  }
+  @include respond-to(medium) {
+    .label {
+      float: left;
+      text-align: right;
+      display: inline;
+      width: 27%;
+    }
+    .content {
+      margin-left: 30%;
+    }
+    select,
+    input {
+      width: auto;
+    }
+  }
+}

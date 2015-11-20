@@ -52,6 +52,3 @@ DEPENDENCIES
   sass-globbing (~> 1.1)
   scss-lint (~> 0.33)
   zen-grids (>= 2.0.0.beta.3)
-
-BUNDLED WITH
-   1.10.6

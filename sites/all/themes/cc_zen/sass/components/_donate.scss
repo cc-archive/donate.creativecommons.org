@@ -4,41 +4,16 @@
   }
 
   #crm-container {
+    .email-5-section {
+      @include mobile-labels;
+    }
+
     .crm-group.custom_pre_profile-group,
     .billing_mode-group.credit_card_info-group,
     .crm-group.payment_options-group,
     .billing_name_address-group {
       .crm-section {
-        .label {
-          display: block;
-          text-align: left;
-          width: 100%;
-        }
-        .content {
-          margin-left: 0;
-        }
-        select,
-        input {
-          box-sizing: border-box;
-          -moz-box-sizing: border-box;
-          -webkit-box-sizing: border-box;
-          width: 100%;
-        }
-        @include respond-to(medium) {
-          .label {
-            float: left;
-            text-align: right;
-            display: inline;
-            width: 27%;
-          }
-          .content {
-            margin-left: 30%;
-          }
-          select,
-          input {
-            width: auto;
-          }
-        }
+	@include mobile-labels;
       }
     }
 
@@ -78,7 +53,7 @@
     }
     
     .price-set-row {
-      width: 160px;
+      width: 100px;
       height: 60px;
       margin-right: 15px;
       margin-bottom: 20px;
@@ -92,6 +67,9 @@
         label {
           color: color(green);
         }
+      }
+      @include respond-to(small) {
+	width: 160px;
       }
 
       .price-set-option-content {
