@@ -18,7 +18,7 @@ ADD UNIQUE INDEX UI_name ( name );
 DELETE FROM civicrm_currency WHERE name = 'EEK';
 
 -- CRM-8769
-INSERT INTO civicrm_state_province
+INSERT IGNORE INTO civicrm_state_province
   (`name`, `abbreviation`, `country_id`)
 VALUES
   ('Metropolitan Manila' , 'MNL', '1170');
@@ -197,7 +197,7 @@ SET @locallastID:=LAST_INSERT_ID();
 INSERT INTO civicrm_navigation
     ( domain_id, url, label, name, permission, permission_operator, parent_id, is_active, has_separator, weight )
 VALUES
-    ( @domainID, 'civicrm/admin/setting/localization&reset=1',          '{ts escape="sql" skip="true"}Languages, Currency, Location{/ts}', 'Languages, Currency, Locations',   'administer CiviCRM', '', @locallastID, '1', NULL, 1 ),
+    ( @domainID, 'civicrm/admin/setting/localization&reset=1',          '{ts escape="sql" skip="true"}Languages, Currency, Locations{/ts}', 'Languages, Currency, Locations',   'administer CiviCRM', '', @locallastID, '1', NULL, 1 ),
     ( @domainID, 'civicrm/admin/setting/preferences/address&reset=1',   '{ts escape="sql" skip="true"}Address Settings{/ts}',               'Address Settings',                 'administer CiviCRM', '', @locallastID, '1', NULL, 2 ),
     ( @domainID, 'civicrm/admin/setting/date&reset=1',                  '{ts escape="sql" skip="true"}Date Format{/ts}',                    'Date Formats',                     'administer CiviCRM', '', @locallastID, '1', NULL, 3 ),
     ( @domainID, 'civicrm/admin/options/languages&group=languages&reset=1', '{ts escape="sql" skip="true"}Preferred Language Options{/ts}', 'Preferred Language Options',       'administer CiviCRM', '', @locallastID, '1', NULL, 4 );
@@ -267,7 +267,7 @@ UPDATE civicrm_option_group SET `is_reserved` = 1;
 {/if}
 
 -- CRM-9112
- ALTER TABLE `civicrm_dedupe_rule_group` ADD `title` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'Label of the rule group';
+  ALTER TABLE `civicrm_dedupe_rule_group` ADD `title` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'Label of the rule group';
 
 ALTER TABLE `civicrm_dedupe_rule_group` ADD `is_reserved` TINYINT( 4 ) NULL DEFAULT NULL COMMENT 'Is this a reserved rule - a rule group that has been optimized and cannot be changed by the admin';
 

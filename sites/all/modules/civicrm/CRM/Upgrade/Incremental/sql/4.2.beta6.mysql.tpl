@@ -1,7 +1,5 @@
 -- FIXME: the final release version is uncertain -- could 4.2.0 or 4.2.1; make sure this fixed before merging
 -- CRM-10660
-
-
 CREATE TABLE `civicrm_managed` (
 
 
@@ -23,4 +21,3 @@ CREATE TABLE `civicrm_managed` (
 
 
 )  ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci  ;
-
