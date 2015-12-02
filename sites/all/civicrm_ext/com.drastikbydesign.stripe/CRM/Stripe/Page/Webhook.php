@@ -17,7 +17,8 @@ class CRM_Stripe_Page_Webhook extends CRM_Core_Page {
 
     $test_mode = ! $data->livemode;
 
-    $stripe_key = CRM_Core_DAO::singleValueQuery("SELECT user_name FROM civicrm_payment_processor WHERE payment_processor_type = 'Stripe' AND is_test = '$test_mode'");
+    $stripe_key = CRM_Core_DAO::singleValueQuery("SELECT pp.user_name FROM civicrm_payment_processor pp INNER JOIN civicrm_payment_processor_type ppt on pp.payment_processor_type_id = ppt.id AND ppt.name  = 'Stripe' WHERE is_test = '$test_mode'");
+
     require_once ("packages/stripe-php/lib/Stripe.php");
     Stripe::setApiKey($stripe_key);
 
@@ -85,13 +86,11 @@ class CRM_Stripe_Page_Webhook extends CRM_Core_Page {
         $stripe_customer = Stripe_Customer::retrieve($customer_id);
         $recieve_date = date("Y-m-d H:i:s", $charge->created);
         $total_amount = $charge->amount / 100;
-        $fee_amount = $charge->fee / 100;
+        $fee_amount = isset($charge->fee) ? ($charge->fee / 100) : 0;
         $net_amount = $total_amount - $fee_amount;
         $transaction_id = $charge->id;
         $new_invoice_id = $stripe_event_data->data->object->id;
-        if (empty($recur_contrib_query->campaign_id)) {
-          $recur_contrib_query->campaign_id = 'NULL';
-        }
+        
 
         $query_params = array(
           1 => array($invoice_id, 'String'),
@@ -127,8 +126,18 @@ class CRM_Stripe_Page_Webhook extends CRM_Core_Page {
           10 => array($recur_contrib_query->currency, 'String'),
           11 => array($recur_contrib_query->id, 'Integer'),
           12 => array($recur_contrib_query->is_test, 'Integer'),
-          13 => array($recur_contrib_query->campaign_id, 'IntegerOrNull'),
         );
+
+        // We have to add campaign_id manually because it could be an integer
+        // or it could be NULL and CiviCRM can't validate something that could
+        // be either.;
+        if (!empty($recur_contrib_query->campaign_id)) {
+          // If it's a number, ensure it's an intval to avoid injection attack.
+          $campaign_id = intval($recur_contrib_query->campaign_id);
+        }
+        else {
+          $campaign_id = 'NULL';
+        }
         CRM_Core_DAO::executeQuery("INSERT INTO civicrm_contribution (
           contact_id, {$financial_field}, payment_instrument_id, receive_date,
           total_amount, fee_amount, net_amount, trxn_id, invoice_id, currency,
@@ -136,7 +145,7 @@ class CRM_Stripe_Page_Webhook extends CRM_Core_Page {
           ) VALUES (
           %1, %2, %3, %4,
           %5, %6, %7, %8, %9, %10,
-          %11, %12, '1', %13)",
+          %11, %12, '1', $campaign_id)",
           $query_params);
 
           if (!empty($end_time) && $time_compare > $end_time) {
@@ -215,7 +224,7 @@ class CRM_Stripe_Page_Webhook extends CRM_Core_Page {
         // Build some params.
         $recieve_date = date("Y-m-d H:i:s", $charge->created);
         $total_amount = $charge->amount / 100;
-        $fee_amount = $charge->fee / 100;
+        $fee_amount = isset($charge->fee) ? ($charge->fee / 100) : 0;
         $net_amount = $total_amount - $fee_amount;
         $transaction_id = $charge->id;
         if (empty($recur_contrib_query->campaign_id)) {
@@ -264,6 +273,59 @@ class CRM_Stripe_Page_Webhook extends CRM_Core_Page {
           }
 
         break;
+
+
+      //Subscription is cancelled
+      case 'customer.subscription.deleted':
+
+        // Find the recurring contribution in CiviCRM by mapping it from Stripe.
+        $query_params = array(
+            1 => array($customer_id, 'String'),
+        );
+        $rel_info_query = CRM_Core_DAO::executeQuery("SELECT invoice_id
+          FROM civicrm_stripe_subscriptions
+          WHERE customer_id = %1",
+            $query_params);
+
+        if (!empty($rel_info_query)) {
+          $rel_info_query->fetch();
+
+          if (!empty($rel_info_query->invoice_id)) {
+            $invoice_id = $rel_info_query->invoice_id;
+          } else {
+            CRM_Core_Error::Fatal("Error relating this customer ($customer_id) to the one in civicrm_stripe_subscriptions");
+            exit();
+          }
+        }
+
+        // Fetch Civi's info about this recurring contribution
+        $recur_contribution = civicrm_api3('ContributionRecur', 'get', array(
+          'sequential' => 1,
+          'return' => "id",
+          'invoice_id' => $invoice_id
+        ));
+
+        if (!$recur_contribution['id']) {
+          CRM_Core_Error::Fatal("ERROR: Stripe triggered a Webhook on an invoice not found in civicrm_contribution_recur: "
+              . $stripe_event_data);
+          exit();
+        }
+
+        //Cancel the recurring contribution
+        $result = civicrm_api3('ContributionRecur', 'cancel', array(
+            'sequential' => 1,
+            'id' => $recur_contribution['id']
+        ));
+
+        //Delete the record from Stripe's subscriptions table
+        $query_params = array(
+            1 => array($invoice_id, 'String'),
+        );
+        CRM_Core_DAO::executeQuery("DELETE FROM civicrm_stripe_subscriptions
+              WHERE invoice_id = %1", $query_params);
+
+        break;
+
 
       // One-time donation and per invoice payment.
       case 'charge.succeeded':
