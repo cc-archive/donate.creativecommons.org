@@ -673,4 +673,10 @@ class CRM_Core_Payment_Stripe extends CRM_Core_Payment {
   function doTransferCheckout(&$params, $component) {
     CRM_Core_Error::fatal(ts('Use direct billing instead of Transfer method.'));
   }
+
+  function getPaymentFormFieldsMetadata() {
+    $result = parent::getPaymentFormFieldsMetadata();
+    $result['credit_card_number']['attributes']['class'] = $result['credit_card_number']['attributes']['class'] . " stripe-processor-canary";
+    return $result;
+  }
 }
