@@ -177,29 +177,33 @@ class CRM_Core_Payment_Stripe extends CRM_Core_Payment {
       }
     }
     catch (Exception $e) {
-      if (is_a($e, 'Stripe_Error')) {
-        foreach ($ignores as $ignore) {
-          if (is_a($e, $ignore['class'])) {
-            $body = $e->getJsonBody();
-            $error = $body['error'];
-            if ($error['type'] == $ignore['type'] && $error['message'] == $ignore['message']) {
-              return $return;
+      $body = $e->getJsonBody();
+      if ($body != '') {
+        if (is_a($e, 'Stripe_Error')) {
+          foreach ($ignores as $ignore) {
+            if (is_a($e, $ignore['class'])) {
+              $error = $body['error'];
+              if ($error['type'] == $ignore['type'] && $error['message'] == $ignore['message']) {
+                return $return;
+              }
             }
           }
+          $this->logStripeException($op, $e);
         }
-        $this->logStripeException($op, $e);
       }
       // Something else happened, completely unrelated to Stripe
       $error_message = '';
       // Since it's a decline, Stripe_CardError will be caught
-      $body = $e->getJsonBody();
-      $err = $body['error'];
-
-      //$error_message .= 'Status is: ' . $e->getHttpStatus() . "<br />";
-      ////$error_message .= 'Param is: ' . $err['param'] . "<br />";
-      $error_message .= 'Type: ' . $err['type'] . "<br />";
-      $error_message .= 'Code: ' . $err['code'] . "<br />";
-      $error_message .= 'Message: ' . $err['message'] . "<br />";
+      if ($body == '') {
+        $backtrace = CRM_Core_Error::formatBacktrace($e->getTrace());
+        $error_message = $e->getMessage();
+        CRM_Core_Error::debug_log_message("Stripe_Error {$op}:\n{$error_message}\n{$backtrace}\n");
+      } else {
+        $err = $body['error'];
+        $error_message .= 'Type: ' . $err['type'] . "<br />";
+        $error_message .= 'Code: ' . $err['code'] . "<br />";
+        $error_message .= 'Message: ' . $err['message'] . "<br />";
+      }
 
       if (isset($error_url)) {
       // Redirect to first page of form and present error.
