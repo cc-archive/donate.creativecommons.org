@@ -136,16 +136,11 @@
         }
       }
 
-      // Hide payment if total is 0 and no more participants.
-      if ($('#priceset').length) {
-        additionalParticipants = cj("#additional_participants").val();
-        // The currentTotal is already being calculated in Form/Contribution/Main.tpl.
-        if(typeof currentTotal !== 'undefined') {
-          if (currentTotal == 0 && !additionalParticipants) {
-            // This is also hit when "Going back", but we already have stripe_token.
-            return true;
-          }
-        }
+      // CiviCRM javascript code hides .payment_options-group class if
+      // there should be no payment.
+      var payment_options = cj(".payment_options-group");
+      if (!payment_options.is(":visible")) {
+        return true;
       }
 
       // Handle multiple payment options and Stripe not being chosen.
