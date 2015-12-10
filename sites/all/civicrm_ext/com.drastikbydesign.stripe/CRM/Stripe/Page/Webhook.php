@@ -8,11 +8,21 @@ require_once 'CRM/Core/Page.php';
 
 class CRM_Stripe_Page_Webhook extends CRM_Core_Page {
   function run() {
+    try {
+      $this->handleEvent();
+    } catch (Exception $e) {
+      header("HTTP/1.1 500 Internal Server Error");
+      CRM_Core_Error::Fatal($e->getMessage());
+      exit();
+    }
+  }
+
+  function handleEvent() {
     // Get the data from Stripe.
     $data_raw = file_get_contents("php://input");
     $data = json_decode($data_raw);
     if (!$data) {
-      CRM_Core_Error::Fatal("Stripe Callback: cannot json_decode data, exiting. <br /> $data");
+      throw new Exception("Stripe Callback: cannot json_decode data, exiting. <br /> $data");
     }
 
     $test_mode = ! $data->livemode;
@@ -30,14 +40,7 @@ class CRM_Stripe_Page_Webhook extends CRM_Core_Page {
       // Successful recurring payment.
       case 'invoice.payment_succeeded':
         // Get the Stripe charge object.
-        try {
-          $charge = Stripe_Charge::retrieve($stripe_event_data->data->object->charge);
-        }
-        catch(Exception $e) {
-          CRM_Core_Error::Fatal("Failed to retrieve Stripe charge.  Message: " . $e->getMessage());
-          exit();
-        }
-
+        $charge = Stripe_Charge::retrieve($stripe_event_data->data->object->charge);
         // Find the recurring contribution in CiviCRM by mapping it from Stripe.
         $query_params = array(
           1 => array($customer_id, 'String'),
@@ -51,10 +54,8 @@ class CRM_Stripe_Page_Webhook extends CRM_Core_Page {
           $rel_info_query->fetch();
           $invoice_id = $rel_info_query->invoice_id;
           $end_time = $rel_info_query->end_time;
-        }
-        else {
-          CRM_Core_Error::Fatal("Error relating this customer ($customer_id) to the one in civicrm_stripe_subscriptions");
-          exit();
+        } else {
+          throw new Exception("Error relating this customer ($customer_id) to the one in civicrm_stripe_subscriptions");
         }
 
         // Compare against now + 24hrs to prevent charging 1 extra day.
@@ -77,10 +78,8 @@ class CRM_Stripe_Page_Webhook extends CRM_Core_Page {
 
         if (!empty($recur_contrib_query)) {
           $recur_contrib_query->fetch();
-        }
-        else {
-          CRM_Core_Error::Fatal("ERROR: Stripe triggered a Webhook on an invoice not found in civicrm_contribution_recur: " . $stripe_event_data);
-          exit();
+        } else {
+          throw new Exception("ERROR: Stripe triggered a Webhook on an invoice not found in civicrm_contribution_recur: " . $stripe_event_data);
         }
         // Build some params.
         $stripe_customer = Stripe_Customer::retrieve($customer_id);
@@ -187,14 +186,7 @@ class CRM_Stripe_Page_Webhook extends CRM_Core_Page {
       // Failed recurring payment.
       case 'invoice.payment_failed':
         // Get the Stripe charge object.
-        try {
-          $charge = Stripe_Charge::retrieve($stripe_event_data->data->object->charge);
-        }
-        catch(Exception $e) {
-          CRM_Core_Error::Fatal("Failed to retrieve Stripe charge.  Message: " . $e->getMessage());
-          exit();
-        }
-
+        $charge = Stripe_Charge::retrieve($stripe_event_data->data->object->charge);
         // Find the recurring contribution in CiviCRM by mapping it from Stripe.
         $query_params = array(
           1 => array($customer_id, 'String'),
@@ -203,8 +195,7 @@ class CRM_Stripe_Page_Webhook extends CRM_Core_Page {
           FROM civicrm_stripe_subscriptions
           WHERE customer_id = %1", $query_params);
         if (empty($invoice_id)) {
-          CRM_Core_Error::Fatal("Error relating this customer ({$customer_id}) to the one in civicrm_stripe_subscriptions");
-          exit();
+          throw new Exception("Error relating this customer ({$customer_id}) to the one in civicrm_stripe_subscriptions");
         }
 
         // Fetch Civi's info about this recurring object.
@@ -216,10 +207,8 @@ class CRM_Stripe_Page_Webhook extends CRM_Core_Page {
           WHERE invoice_id = %1", $query_params);
         if (!empty($recur_contrib_query)) {
           $recur_contrib_query->fetch();
-        }
-        else {
-          CRM_Core_Error::Fatal("ERROR: Stripe triggered a Webhook on an invoice not found in civicrm_contribution_recur: " . $stripe_event_data);
-          exit();
+        } else {
+          throw new Exception("ERROR: Stripe triggered a Webhook on an invoice not found in civicrm_contribution_recur: " . $stripe_event_data);
         }
         // Build some params.
         $recieve_date = date("Y-m-d H:i:s", $charge->created);
@@ -293,8 +282,7 @@ class CRM_Stripe_Page_Webhook extends CRM_Core_Page {
           if (!empty($rel_info_query->invoice_id)) {
             $invoice_id = $rel_info_query->invoice_id;
           } else {
-            CRM_Core_Error::Fatal("Error relating this customer ($customer_id) to the one in civicrm_stripe_subscriptions");
-            exit();
+            throw new Exception("Error relating this customer ($customer_id) to the one in civicrm_stripe_subscriptions");
           }
         }
 
@@ -306,9 +294,7 @@ class CRM_Stripe_Page_Webhook extends CRM_Core_Page {
         ));
 
         if (!$recur_contribution['id']) {
-          CRM_Core_Error::Fatal("ERROR: Stripe triggered a Webhook on an invoice not found in civicrm_contribution_recur: "
-              . $stripe_event_data);
-          exit();
+          throw new Exception("ERROR: Stripe triggered a Webhook on an invoice not found in civicrm_contribution_recur: " . $stripe_event_data);
         }
 
         //Cancel the recurring contribution
