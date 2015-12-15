@@ -4,6 +4,11 @@
   }
 
   #crm-container {
+    .description {
+      color: #404040;
+      margin-left: 1em;
+    }
+
     .email-5-section {
       @include mobile-labels;
     }
@@ -27,12 +32,22 @@
 
     .price_set-section,
     .is_recur-section,
-    .custom_12-section {
+    .helprow-custom_12-section {
       .label {
         width: 0;
       }
+
       .content {
         margin-left: 5%;
+      }
+    }
+
+    .helprow-custom_12-section {
+      .content {
+        color: #696969;
+        font-size: 0.9em;
+        margin-left: 19%;
+        padding: 0;
       }
     }
 
@@ -90,37 +105,41 @@
       }
     }
 
+    .contribution_amount-section .label {
+      display: none;
+    }
+
     .other_amount-section {
       margin-left: 5%;
       .label {
-        display: block;
+        float: left;
+        height: auto;
+        line-height: normal;
         width: 100%;
-        margin-bottom: 5px;
+        padding: 0;
         label {
           float: left;
           @include adjust-font-size-to(1.75 * $base-font-size, 1.15);
           font-weight: bold;
           color: color(green);
+          line-height: normal;
         }
       }
       .content {
         margin-left: 0;
+        padding: 0;
       }
       input {
+        margin-top: 0.1em;
         width: 160px;
-        padding: 7px;
         box-sizing: border-box;
         -moz-box-sizing: border-box;
         -webkit-box-sizing: border-box;
       }
       @include respond-to(medium) {
         .label {
-          display: table;
           width: auto;
-          float: left;
           text-align: right;
-          margin-right: 10px;
-          margin-top: 7px;
         }
       }
     }
@@ -136,7 +155,7 @@
     #frequency_unit,
     #recur_installments_num,
     .billing_middle_name-section,
-    .custom_42-section {
+    #editrow-custom_42 {
       display: none;
     }
 
@@ -159,12 +178,27 @@
       }
     }
 
-    .crm-button input.form-submit {
-      width: 100%;
+    .crm-button input.crm-form-submit {
+      width: auto;
       text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
       @include adjust-font-size-to(1.25 * $base-font-size, 1.15);
-      padding: 12px 22px;
+      padding: 12px;
     }
 
+    .ui-icon-check {
+      display: none;
+    }
+
+    .select2-choice {
+      padding: 0 0 0 8px;
+    }
+
+    .select2-arrow b {
+      top: 0px;
+    }
+
+    table {
+      font-size: 15px;
+    }
   }
 }
