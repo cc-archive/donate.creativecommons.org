@@ -34,6 +34,31 @@
         return selectedPaymentProcessorId() == 1;
       }
 
+      function replaceMonths() {
+        var month_map = {
+          "Jan":"01",
+          "Feb":"02",
+          "Mar":"03",
+          "Apr":"04",
+          "May":"05",
+          "Jun":"06",
+          "Jul":"07",
+          "Aug":"08",
+          "Sep":"09",
+          "Oct":"10",
+          "Nov":"11",
+          "Dec":"12"
+        };
+        $("#credit_card_exp_date_M").find('option').text(function(index, originalText) {
+          for (var month in month_map) {
+            if (originalText.indexOf(month) > -1) {
+              return originalText.replace(month, month_map[month]);
+            }
+          }
+          return originalText;
+        });
+      }
+
       function showHideShippingFields() {
         if (noPremiumSelected() && payPalSelected()) {
 	  $('.page-civicrm-contribute-transact .custom_pre_profile-group').hide();
@@ -96,6 +121,7 @@
       });
       $('.page-civicrm-contribute-transact .crm-form-submit').val('Process Contribution');
       $('#recurHelp').html('');
+      replaceMonths();
     }
   };
 })(jQuery, Drupal, this, this.document);
