@@ -18,7 +18,7 @@
   Drupal.behaviors.my_custom_behavior = {
     attach: function (context, settings) {
       function noPremiumSelected() {
-        return selectedProductId() == 'no_thanks';
+        return selectedProductId() == '' || selectedProductId() == 'no_thanks';
       }
 
       function payPalSelected() {
@@ -76,11 +76,11 @@
 	}
       }
 
-      function showHideShippingFields() {
+      function showHideShippingFields(event, other) {
         if (noPremiumSelected() && payPalSelected()) {
 	  $('.page-civicrm-contribute-transact .custom_pre_profile-group').hide();
 	} else {
-          cj('#billingcheckbox').trigger('change');
+          cj('#billingcheckbox').trigger('click');
 	  $('.page-civicrm-contribute-transact .custom_pre_profile-group').show();
 	}
       }
@@ -93,13 +93,9 @@
       // Shipping Fields
       var premiumField = $('.page-civicrm-contribute-transact .premiums_select-group');
       showHideShippingFields();
-      premiumField.click(function() {
-	showHideShippingFields();
-      });
+      premiumField.click(showHideShippingFields);
       var paymentField = $('.page-civicrm-contribute-transact .payment_processor-section');
-      paymentField.click(function() {
-	showHideShippingFields();
-      });
+      paymentField.click(showHideShippingFields);
 
       $('.page-civicrm-contribute-transact .custom_pre_profile-group').find('label').each(function() {
 	if ($(this).find('*').length == 0) {
@@ -131,9 +127,9 @@
       $('.page-civicrm-contribute-transact .crm-form-submit').val('Process Contribution');
       $('#recurHelp').html('');
       replaceMonths();
+      cj('#billingcheckbox').change(showHideBillingFields);
+      cj('#billingcheckbox').prop('checked', true);
       showHideBillingFields();
-      $('#billingcheckbox').change(showHideBillingFields);
-      cj('#billingcheckbox').prop('checked', true).trigger('change');
     }
   };
 })(jQuery, Drupal, this, this.document);
