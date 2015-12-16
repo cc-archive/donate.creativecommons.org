@@ -17,17 +17,8 @@
   // To understand behaviors, see https://drupal.org/node/756722#behaviors
   Drupal.behaviors.my_custom_behavior = {
     attach: function (context, settings) {
-
-      function selectedProductId() {
-        return $('#selectProduct').val();
-      }
-
       function noPremiumSelected() {
         return selectedProductId() == 'no_thanks';
-      }
-
-      function selectedPaymentProcessorId() {
-        return $('input[name=payment_processor]:checked').val();
       }
 
       function payPalSelected() {
@@ -59,12 +50,20 @@
         });
       }
 
-      function showHideShippingFields() {
-        if (noPremiumSelected() && payPalSelected()) {
-	  $('.page-civicrm-contribute-transact .custom_pre_profile-group').hide();
-	} else {
-	  $('.page-civicrm-contribute-transact .custom_pre_profile-group').show();
-	}
+      function selectedPaymentProcessorId() {
+        return $('input[name=payment_processor]:checked').val();
+      }
+
+      function selectedProductId() {
+        return $('#selectProduct').val();
+      }
+
+      function showHideBillingFields() {
+        if ($('#billingcheckbox').is(':checked')) {
+          $('.billing_name_address-group').hide();
+        } else {
+          $('.billing_name_address-group').show();
+        }
       }
 
       function showHideOtherAmountField() {
@@ -76,6 +75,16 @@
 	  $('.page-civicrm-contribute-transact .other_amount-section').hide();
 	}
       }
+
+      function showHideShippingFields() {
+        if (noPremiumSelected() && payPalSelected()) {
+	  $('.page-civicrm-contribute-transact .custom_pre_profile-group').hide();
+	} else {
+          cj('#billingcheckbox').trigger('change');
+	  $('.page-civicrm-contribute-transact .custom_pre_profile-group').show();
+	}
+      }
+
 
       // Email Field
       $('.page-civicrm-contribute-transact .email-5-section').once().wrap('<fieldset id="contact-information-fieldset">');
@@ -122,6 +131,9 @@
       $('.page-civicrm-contribute-transact .crm-form-submit').val('Process Contribution');
       $('#recurHelp').html('');
       replaceMonths();
+      showHideBillingFields();
+      $('#billingcheckbox').change(showHideBillingFields);
+      cj('#billingcheckbox').prop('checked', true).trigger('change');
     }
   };
 })(jQuery, Drupal, this, this.document);
