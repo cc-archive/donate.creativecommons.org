@@ -17,6 +17,23 @@
   // To understand behaviors, see https://drupal.org/node/756722#behaviors
   Drupal.behaviors.my_custom_behavior = {
     attach: function (context, settings) {
+
+      function copyShippingAddressToBilling() {
+        var field_id_map = {
+          'first_name': 'billing_first_name',
+          'last_name': 'billing_last_name',
+          'street_address-6': 'billing_street_address-5',
+          'city-6': 'billing_city-5',
+          'postal_code-6': 'billing_postal_code-5',
+          'country-6': 'billing_country_id-5',
+          'state_province-6': 'billing_state_province_id-5',
+        };
+        cj.each(field_id_map, function (key, value) {
+          cj('#' + value).val(cj('#' + key).val());
+          cj('#' + value).change();
+        });
+      }
+
       function noPremiumSelected() {
         return selectedProductId() == '' || selectedProductId() == 'no_thanks';
       }
@@ -80,7 +97,7 @@
         if (noPremiumSelected() && payPalSelected()) {
 	  $('.page-civicrm-contribute-transact .custom_pre_profile-group').hide();
 	} else {
-          cj('#billingcheckbox').trigger('click');
+          copyShippingAddressToBilling();
 	  $('.page-civicrm-contribute-transact .custom_pre_profile-group').show();
 	}
       }
@@ -129,6 +146,7 @@
       replaceMonths();
       cj('#billingcheckbox').change(showHideBillingFields);
       cj('#billingcheckbox').prop('checked', true);
+      copyShippingAddressToBilling();
       showHideBillingFields();
     }
   };
