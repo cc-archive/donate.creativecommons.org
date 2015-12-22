@@ -29,6 +29,50 @@
 
 {include file="CRM/common/TrackingFields.tpl"}
 
+<!-- Begin Google Analytics -->
+
+{literal}
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+ })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-2010376-28', 'auto');
+ga('send', 'pageview');
+ga('require', 'ecommerce', 'ecommerce.js');
+ga('ecommerce:addTransaction', {
+{/literal}
+{if $trxn_id}
+id: "{$trxn_id}",
+{else}
+id: "{$qfKey}",
+{/if}
+affiliation: '',
+revenue: "{$amount}",
+{literal}
+shipping: '0' ,
+tax: '0' });
+
+ga('ecommerce:addItem', {
+{/literal}
+{if $trxn_id}
+id: "{$trxn_id}",
+{else}
+id: "{$qfKey}",
+{/if}
+sku: 'Donation',
+name: "{$form.custom_42.value}",
++category: '',
+price: "{$amount}",
+{literal}
+quantity: '1'});
+
+ga('ecommerce:send');
+</script>
+{/literal}
+<!-- End Google Analytics -->
+
 <div class="crm-contribution-page-id-{$contributionPageID} crm-block crm-contribution-thankyou-form-block">
   {if $thankyou_text}
     <div id="thankyou_text" class="crm-section thankyou_text-section">
