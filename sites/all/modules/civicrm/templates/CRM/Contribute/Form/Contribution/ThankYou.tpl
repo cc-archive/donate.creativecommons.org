@@ -63,7 +63,7 @@ id: "{$qfKey}",
 {/if}
 sku: 'Donation',
 name: "{$form.custom_42.value}",
-+category: '',
+category: '',
 price: "{$amount}",
 {literal}
 quantity: '1'});
