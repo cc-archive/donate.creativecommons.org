@@ -447,17 +447,17 @@ class CRM_Core_Payment_Stripe extends CRM_Core_Payment {
 
     // Prepare the charge array, minus Customer/Card details.
     if (empty($params['description'])) {
-      $params['description'] = ts('CiviCRM backend contribution');
+      $description = ts('CiviCRM backend contribution');
     }
     else {
-      $params['description'] = ts('CiviCRM # ') . $params['description'];
+      $description = ts('CiviCRM # ') . $params['description'];
     }
 
     // Stripe charge.
     $stripe_charge = array(
       'amount' => $amount,
       'currency' => strtolower($params['currencyID']),
-      'description' => $params['description'] . ' # Invoice ID: ' . CRM_Utils_Array::value('invoiceID', $params),
+      'description' => $description . ' # Invoice ID: ' . CRM_Utils_Array::value('invoiceID', $params),
     );
 
     // Use Stripe Customer if we have a valid one.  Otherwise just use the card.
