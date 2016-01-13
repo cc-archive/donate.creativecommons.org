@@ -107,7 +107,7 @@ class CRM_Stripe_Page_Webhook extends CRM_Core_Page {
             SET contribution_status_id = '1'
             WHERE id = %1",
             $query_params);
-
+          $this->sendEmail(CRM_Core_Payment::RECURRING_PAYMENT_START, $first_contrib_check, $recur_contrib_query->id);
           return;
         }
 
@@ -324,4 +324,9 @@ class CRM_Stripe_Page_Webhook extends CRM_Core_Page {
     parent::run();
   }
 
+  function sendEmail($payment_status, $contribution_id, $recurring_contribution_id) {
+      $contribution = CRM_Contribute_BAO_Contribution::findById($contribution_id);
+      $recurring_contribution = CRM_Contribute_BAO_ContributionRecur::findById($recurring_contribution_id);
+      CRM_Contribute_BAO_ContributionPage::recurringNotify(CRM_Core_Payment::RECURRING_PAYMENT_START, $recurring_contribution->contact_id, $contribution->contribution_page_id, $recurring_contribution);
+  }
 }
