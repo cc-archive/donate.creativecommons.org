@@ -146,6 +146,10 @@ class CRM_Stripe_Page_Webhook extends CRM_Core_Page {
           %5, %6, %7, %8, %9, %10,
           %11, %12, '1', $campaign_id)",
           $query_params);
+        $contribution_id = CRM_Core_DAO::singleValueQuery("SELECT LAST_INSERT_ID();");
+        if ($contribution_id == NULL) {
+          throw new Exception("Couldn't get ID for newly created contribution.");
+        }
 
           if (!empty($end_time) && $time_compare > $end_time) {
             $end_date = date("Y-m-d H:i:s", $end_time);
@@ -168,6 +172,10 @@ class CRM_Stripe_Page_Webhook extends CRM_Core_Page {
 
             return;
           }
+
+          $contribution = CRM_Contribute_BAO_Contribution::findById($contribution_id);
+          $contribution_recur = CRM_Contribute_BAO_ContributionRecur::findById($recur_contrib_query->id);
+          $this->sendReceiptEmail($contribution_recur, $contribution);
 
           // Successful charge & more to come so set recurring contribution status to In Progress.
           $query_params = array(
@@ -324,10 +332,12 @@ class CRM_Stripe_Page_Webhook extends CRM_Core_Page {
     parent::run();
   }
 
-  function sendReceiptEmail($contribution) {
+  function sendReceiptEmail($contribution_recur, $contribution) {
     $input = array();
     $ids = array(
       'contact' => $contribution->contact_id,
+      'contribution' => $contribution->id,
+      'paymentProcessor' => $contribution_recur->payment_processor_id,
     );
     $values = array(
       'is_email_receipt' => TRUE,
@@ -335,10 +345,10 @@ class CRM_Stripe_Page_Webhook extends CRM_Core_Page {
     $contribution->composeMessageArray($input, $ids, $values, TRUE, FALSE);
   }
 
-  function sendStartEmails($contribution_id, $recurring_contribution_id) {
+  function sendStartEmails($contribution_id, $contribution_recur_id) {
     $contribution = CRM_Contribute_BAO_Contribution::findById($contribution_id);
-    $recurring_contribution = CRM_Contribute_BAO_ContributionRecur::findById($recurring_contribution_id);
-    CRM_Contribute_BAO_ContributionPage::recurringNotify(CRM_Core_Payment::RECURRING_PAYMENT_START, $recurring_contribution->contact_id, $contribution->contribution_page_id, $recurring_contribution);
-    $this->sendReceiptEmail($contribution);
+    $contribution_recur = CRM_Contribute_BAO_ContributionRecur::findById($contribution_recur_id);
+    CRM_Contribute_BAO_ContributionPage::recurringNotify(CRM_Core_Payment::RECURRING_PAYMENT_START, $contribution_recur->contact_id, $contribution->contribution_page_id, $contribution_recur);
+    $this->sendReceiptEmail($contribution_recur, $contribution);
   }
 }
