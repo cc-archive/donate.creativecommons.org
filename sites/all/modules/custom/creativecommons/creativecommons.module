@@ -19,6 +19,16 @@ function creativecommons_civicrm_buildForm($formName, &$form) {
     // Set Supporter List Opt-in field to checked by default
     $defaults['custom_12'] = '1';
     $form->setDefaults( $defaults );
+
+    if ($form->_submitValues['selectProduct'] == 'no_thanks' && $form->_submitValues['payment_processor'] == 1) {
+      unset($form->_submitValues['first_name']);
+      unset($form->_submitValues['last_name']);
+      unset($form->_submitValues['street_address-6']);
+      unset($form->_submitValues['city-6']);
+      unset($form->_submitValues['country-6']);
+      unset($form->_submitValues['state_province-6']);
+      unset($form->_submitValues['postal_code-6']);
+    }
   }
 }
 
@@ -43,3 +53,4 @@ function creativecommons_civicrm_validateForm($formName, &$fields, &$files, &$fo
   }
   return;
 }
+
