@@ -107,6 +107,10 @@
       $('.page-civicrm-contribute-transact .email-5-section').once().wrap('<fieldset id="contact-information-fieldset">');
       $('#contact-information-fieldset').once().prepend('<legend>Contact Information</legend>');
 
+      // First/Last Name Fields
+      $('.editrow_first_name-section').insertAfter('.email-5-section');
+      $('.editrow_last_name-section').insertAfter('.editrow_first_name-section');
+
       // Shipping Fields
       var premiumField = $('.page-civicrm-contribute-transact .premiums_select-group');
       showHideShippingFields();

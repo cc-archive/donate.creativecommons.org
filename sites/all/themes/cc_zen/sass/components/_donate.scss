@@ -9,14 +9,11 @@
       margin-left: 1em;
     }
 
-    .email-5-section {
-      @include mobile-labels;
-    }
-
     .crm-group.custom_pre_profile-group,
     .billing_mode-group.credit_card_info-group,
     .crm-group.payment_options-group,
-    .billing_name_address-group {
+    .billing_name_address-group,
+    #contact-information-fieldset {
       .crm-section {
 	@include mobile-labels;
       }
