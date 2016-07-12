@@ -244,6 +244,15 @@ INSERT INTO civicrm_country (name,iso_code,region_id,is_province_abbreviated) VA
 INSERT INTO civicrm_country (name,iso_code,region_id,is_province_abbreviated) VALUES("Sint Maarten (Dutch Part)", "SX", @region_id, 0);
 INSERT INTO civicrm_country (name,iso_code,region_id,is_province_abbreviated) VALUES("Bonaire, Saint Eustatius and Saba", "BQ", @region_id, 0);
 
+-- CRM-12428
+{if $multilingual}
+    {foreach from=$locales item=locale}
+      ALTER TABLE `civicrm_price_field_value` CHANGE label_{$locale} label_{$locale} VARCHAR(255)  NULL DEFAULT NULL;
+    {/foreach}
+{else}
+  ALTER TABLE `civicrm_price_field_value` CHANGE `label` `label` VARCHAR(255)  NULL DEFAULT NULL;
+{/if}
+
 -- CRM-9714 create a default price set for contribution and membership
 ALTER TABLE `civicrm_price_set`
 ADD         `is_quick_config` TINYINT(4) NOT NULL DEFAULT '0'
@@ -288,7 +297,7 @@ LEFT JOIN civicrm_price_field cpf ON  cps.id = cpf.price_set_id
 LEFT JOIN civicrm_price_field_value cpfv ON cpf.id = cpfv.price_field_id
 WHERE cps.name = 'default_contribution_amount';
 
-INSERT INTO civicrm_line_item ( entity_table, entity_id, price_field_id,label, qty, unit_price, line_total, participant_count, price_field_value_id )
+INSERT INTO civicrm_line_item ( entity_table, entity_id, price_field_id, label, qty, unit_price, line_total, participant_count, price_field_value_id )
 SELECT 'civicrm_contribution', cc.id, @fieldID, 'Contribution Amount', 1, total_amount, total_amount , 0, @fieldValueID
 FROM `civicrm_contribution` cc
 LEFT JOIN civicrm_line_item cli ON cc.id=cli.entity_id and cli.entity_table = 'civicrm_contribution'

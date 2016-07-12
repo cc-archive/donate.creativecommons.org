@@ -1,8 +1,8 @@
 {*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.2                                                |
+ | CiviCRM version 4.6                                                |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2012                                |
+ | Copyright CiviCRM LLC (c) 2004-2015                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -30,27 +30,27 @@ var lastName = null;
 cj("#checkavailability").click(function() {
    var cmsUserName = cj.trim(cj("#cms_name").val());
    if ( lastName == cmsUserName) {
-	 /*if user checking the same user name more than one times. avoid the ajax call*/
-	 return;
+   /*if user checking the same user name more than one times. avoid the ajax call*/
+   return;
    }
    /*don't allow special character and for joomla minimum username length is two*/
 
    var spchar = "\<|\>|\"|\'|\%|\;|\(|\)|\&|\\\\|\/";
 
    {/literal}{if $config->userSystem->is_drupal == "1"}{literal}
-	 spchar = spchar + "|\~|\`|\:|\@|\!|\=|\#|\$|\^|\*|\{|\}|\\[|\\]|\+|\?|\,";
+   spchar = spchar + "|\~|\`|\:|\@|\!|\=|\#|\$|\^|\*|\{|\}|\\[|\\]|\+|\?|\,";
    {/literal}{/if}{literal}
    var r = new RegExp( "["+spchar+"]", "i");
    /*regular expression \\ matches a single backslash. this becomes r = /\\/ or r = new RegExp("\\\\").*/
    if ( r.exec(cmsUserName) ) {
-	 alert('{/literal}{ts escape="js"}Your username contains invalid characters{/ts}{literal}');
-   	 return;
+   alert('{/literal}{ts escape="js"}Your username contains invalid characters{/ts}{literal}');
+      return;
    }
    {/literal}{if $config->userFramework == "Joomla"}{literal}
-	 else if ( cmsUserName && cmsUserName.length < 2 ) {
-	    alert('{/literal}{ts escape="js"}Your username is too short{/ts}{literal}');
-	    return;
-	 }
+   else if ( cmsUserName && cmsUserName.length < 2 ) {
+      alert('{/literal}{ts escape="js"}Your username is too short{/ts}{literal}');
+      return;
+   }
    {/literal}{/if}{literal}
    if (cmsUserName) {
    /*take all messages in javascript variable*/
@@ -88,7 +88,7 @@ cj("#checkavailability").click(function() {
    }, "json");
    lastName = cmsUserName;
    } else {
-	 cj("#msgbox").removeClass().text('').css({"backgroundColor":"#FFFFFF", "border": "0px #FFFFFF"}).fadeIn("fast");
+   cj("#msgbox").removeClass().text('').css({"backgroundColor":"#FFFFFF", "border": "0px #FFFFFF"}).fadeIn("fast");
    }
 });
 {/literal}

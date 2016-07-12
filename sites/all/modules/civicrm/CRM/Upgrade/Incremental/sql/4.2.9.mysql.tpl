@@ -1,2 +1,2 @@
-UPDATE civicrm_dedupe_rule_group SET title = name WHERE title IS NULL;
+-- Placeholder which ensures that PHP upgrade tasks are executed
 

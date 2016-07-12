@@ -1,0 +1,681 @@
+<?php
+/**
+ * @file
+ * GR Default install configuration.
+ * !IMPORTANT! If you update the media or wywsiwyg portions of this install,
+ * please also update the gr_media_defaults module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function gr_default_install() {
+  include_once DRUPAL_ROOT . '/profiles/minimal/minimal.install';
+  minimal_install();
+  // See https://support.giantrabbit.com/issues/20664
+  module_enable(array('linkit'));
+
+  variable_set('user_register', USER_REGISTER_ADMINISTRATORS_ONLY);
+
+  // Full html format.
+  $full_html_format = array(
+    'format' => 'full_html',
+    'name' => 'Full HTML',
+    'weight' => 1,
+    'filters' => array(
+      // URL filter.
+      'filter_url' => array(
+        'weight' => 0,
+        'status' => 1,
+      ),
+      // Media filter.
+      'media_filter' => array(
+        'weight' => 20,
+        'status' => 1,
+      ),
+      // HTML corrector filter.
+      'filter_htmlcorrector' => array(
+        'weight' => 10,
+        'status' => 1,
+      ),
+      // Line break filter.
+      'filter_autop' => array(
+        'weight' => 1,
+        'status' => 1,
+      ),
+      // Pathologic filter.
+      'pathologic' => array(
+        'weight' => 25,
+        'status' => 1,
+      ),
+    ),
+  );
+  $full_html_format = (object) $full_html_format;
+  filter_format_save($full_html_format);
+
+  $default_theme = variable_get('theme_default', 'bartik');
+  $admin_theme = 'seven';
+
+  // Insert default pre-defined node types into the database. For a complete
+  // list of available node type attributes, refer to the node type API
+  // documentation at: http://api.drupal.org/api/HEAD/function/hook_node_info.
+  $types = array(
+    array(
+      'type' => 'page',
+      'name' => st('Basic page'),
+      'base' => 'node_content',
+      'description' => st("Use <em>basic pages</em> for your static content, such as an 'About us' page."),
+      'custom' => 1,
+      'modified' => 1,
+      'locked' => 0,
+    ),
+  );
+
+  foreach ($types as $type) {
+    $type = node_type_set_defaults($type);
+    node_type_save($type);
+    node_add_body_field($type);
+  }
+
+  // Insert default pre-defined RDF mapping into the database.
+  $rdf_mappings = array(
+    array(
+      'type' => 'node',
+      'bundle' => 'page',
+      'mapping' => array(
+        'rdftype' => array('foaf:Document'),
+      ),
+    ),
+  );
+
+  foreach ($rdf_mappings as $rdf_mapping) {
+    rdf_mapping_save($rdf_mapping);
+  }
+
+  // Set "Basic Page" options to "Published" and "Create new revision"
+  variable_set('node_options_page', array('status', 'revision'));
+
+  // Don't display date/author information for "Basic page" nodes by default.
+  variable_set('node_submitted_page', FALSE);
+
+  // Set basic page pathauto pattern.
+  variable_set('pathauto_node_page_pattern', '[node:title]');
+
+  // Enable user picture support and
+  // set the default to a square thumbnail option.
+  variable_set('user_pictures', '1');
+  variable_set('user_picture_dimensions', '1024x1024');
+  variable_set('user_picture_file_size', '800');
+  variable_set('user_picture_style', 'thumbnail');
+
+  $full_html_permission = filter_permission_name($full_html_format);
+
+  user_role_grant_permissions(DRUPAL_AUTHENTICATED_RID, array('access content',
+    $full_html_permission));
+  // Create default admin role with all permissions
+  $admin_role = new stdClass();
+  $admin_role->name = 'administrator';
+  $admin_role->weight = 2;
+  user_role_save($admin_role);
+  user_role_grant_permissions($admin_role->rid, array_keys(module_invoke_all('permission')));
+  // Set this as the administrator role.
+  variable_set('user_admin_role', $admin_role->rid);
+
+  // Assign user 1 the "administrator" role.
+  db_insert('users_roles')
+    ->fields(array('uid' => 1, 'rid' => $admin_role->rid))
+    ->execute();
+
+  // Allow users to login with email via LoginToboggan.
+  variable_set('logintoboggan_login_with_email', 1);
+
+  // Create a Home link in the main menu.
+  $item = array(
+    'link_title' => st('Home'),
+    'link_path' => '<front>',
+    'menu_name' => 'main-menu',
+  );
+  menu_link_save($item);
+
+  // Update the menu router information.
+  menu_rebuild();
+
+  // Enable the admin theme.
+  db_update('system')
+    ->fields(array('status' => 1))
+    ->condition('type', 'theme')
+    ->condition('name', 'seven')
+    ->execute();
+  variable_set('admin_theme', 'seven');
+  variable_set('node_admin_theme', '1');
+
+  // Disable the overlay, toolbar modules.
+  $disable_modules = array('overlay', 'toolbar');
+  db_update('system')->fields(array('status' => 0))
+    ->condition('name', $disable_modules, 'IN')
+    ->execute();
+
+  // Disable default environment indicator.
+  variable_set('default_environment_indicator_environment', array('default_environment' => TRUE));
+
+  // Wysiwyg settings.
+  db_merge('wysiwyg')->key(array('format' => 'text_plain'))
+    ->fields(array(
+      'editor' => ''
+    ))->execute();
+  $full_html_settings = array(
+    'default' => 1,
+    'user_choose' => 0,
+    'show_toggle' => 1,
+    'add_to_summaries' => 1,
+    'theme' => '',
+    'language' => 'en',
+    'buttons' => array(
+      'default' => array(
+        'Bold' => 1,
+        'Italic' => 1,
+        'Underline' => 1,
+        'Strike' => 1,
+        'JustifyLeft' => 1,
+        'JustifyCenter' => 1,
+        'JustifyRight' => 1,
+        'BulletedList' => 1,
+        'NumberedList' => 1,
+        'Outdent' => 1,
+        'Indent' => 1,
+        'Undo' => 1,
+        'Redo' => 1,
+        'Link' => 1,
+        'Unlink' => 1,
+        'Anchor' => 1,
+        'Image' => 1,
+        'Superscript' => 1,
+        'Subscript' => 1,
+        'Blockquote' => 1,
+        'Source' => 1,
+        'HorizontalRule' => 1,
+        'Cut' => 1,
+        'Copy' => 1,
+        'Paste' => 1,
+        'PasteFromWord' => 1,
+        'ShowBlocks' => 1,
+        'RemoveFormat' => 1,
+        'SpecialChar' => 1,
+        'Format' => 1,
+        'FontSize' => 1,
+        'Table' => 1,
+        'SelectAll' => 1,
+        'Find' => 1,
+        'Iframe' => 1,
+        'Maximize' => 1,
+        'SpellChecker' => 1,
+      ),
+      'linkit' => array(
+        'linkit' => 1,
+      ),
+      'drupal' => array(
+        'media' => 1,
+      ),
+    ),
+    'toolbarLocation' => 'top',
+    'resize_enabled' => 1,
+    'default_toolbar_grouping' => 1,
+    'simple_source_formatting' => 0,
+    'acf_mode' => 0,
+    'acf_allowed_content' => '',
+    'css_setting' => 'theme',
+    'css_path' => '',
+    'stylesSet' => '',
+    'block_formats' => 'p,address,pre,h2,h3,h4,h5,h6,div',
+    'advanced__active_tab' => 'edit-basic',
+    'forcePasteAsPlainText' => 1,
+  );
+
+  db_merge('wysiwyg')->key(array('format' => 'full_html'))
+    ->fields(array(
+      'editor' => 'ckeditor',
+      'settings' => serialize($full_html_settings),
+    ))->execute();
+
+
+  // Set default display settings for image 'wysiwyg' view mode.
+  $img_file_view_modes = array(
+    array(
+      'status' => 0,
+      'weight' => '0',
+      'settings' => serialize(array('text' => 'Download [file:name]')),
+      'name' => 'image__wysiwyg__file_field_file_download_link',
+    ),
+    array(
+      'status' => 0,
+      'weight' => '0',
+      'name' => 'image__wysiwyg__file_field_file_default',
+      'settings' => NULL,
+    ),
+    array(
+      'status' => 1,
+      'weight' => '0',
+      'settings' => serialize(array(
+        'image_style' => '',
+        'image_link' => '',
+      )),
+      'name' => 'image__wysiwyg__file_field_image',
+    ),
+    array(
+      'status' => 0,
+      'weight' => '0',
+      'name' => 'image__wysiwyg__file_field_media_large_icon',
+      'settings' => NULL,
+    ),
+    array(
+      'status' => 0,
+      'weight' => '0',
+      'name' => 'image__wysiwyg__file_field_file_table',
+      'settings' => NULL,
+    ),
+    array(
+      'status' => 0,
+      'weight' => '0',
+      'name' => 'image__wysiwyg__file_field_file_url_plain',
+      'settings' => NULL,
+    ),
+  );
+
+  $query = db_insert('file_display')->fields(array('status', 'weight', 'name', 'settings'));
+  foreach ($img_file_view_modes as $mode) {
+    $query->values($mode);
+  }
+  $query->execute();
+
+  // Set default display settings for doc 'wysiwyg' view mode.
+  $doc_file_view_modes = array(
+    array(
+      'status' => 0,
+      'weight' => '0',
+      'settings' => serialize(array(
+        'text' => 'Download [file:name]',
+      )),
+      'name' => 'document__wysiwyg__file_field_file_download_link',
+    ),
+    array(
+      'status' => 0,
+      'weight' => '0',
+      'name' => 'document__wysiwyg__file_field_file_default',
+      'settings' => NULL,
+    ),
+    array(
+      'status' => 0,
+      'weight' => '0',
+      'name' => 'document__wysiwyg__file_field_media_large_icon',
+      'settings' => NULL,
+    ),
+    array(
+      'status' => 1,
+      'weight' => '0',
+      'settings' => serialize(array(
+        'text' => '[file:name]',
+      )),
+      'name' => 'document__wysiwyg__file_field_file_simple_download_link',
+    ),
+    array(
+      'status' => 0,
+      'weight' => '0',
+      'name' => 'document__wysiwyg__file_field_file_table',
+      'settings' => NULL,
+    ),
+    array(
+      'status' => 0,
+      'weight' => '0',
+      'name' => 'document__wysiwyg__file_field_file_url_plain',
+      'settings' => NULL,
+    ),
+  );
+  $query = null;
+  $query = db_insert('file_display')->fields(array('status', 'weight', 'name', 'settings'));
+  foreach ($doc_file_view_modes as $mode) {
+    $query->values($mode);
+  }
+  $query->execute();
+
+  // Restrict WYSIWYG View Modes for image files.
+  variable_set('media_wysiwyg_view_mode_image_wysiwyg_restricted_view_modes_status', TRUE);
+  variable_set('media_wysiwyg_view_mode_image_wysiwyg_restricted_view_modes', array(
+    'default' => 'default',
+    'teaser' => 'teaser',
+    'full' => 'full',
+    'preview' => 'preview',
+    'rss' => 'rss',
+    'search_index' => 'search_index',
+    'search_result' => 'search_result',
+    'token' => 'token',
+    'wysiwyg' => 0,
+  ));
+
+  // Restrict WYSIWYG View Modes for document files.
+  variable_set('media_wysiwyg_view_mode_document_wysiwyg_restricted_view_modes_status', TRUE);
+  variable_set('media_wysiwyg_view_mode_document_wysiwyg_restricted_view_modes', array(
+    'default' => 'default',
+    'teaser' => 'teaser',
+    'full' => 'full',
+    'preview' => 'preview',
+    'rss' => 'rss',
+    'search_index' => 'search_index',
+    'search_result' => 'search_result',
+    'token' => 'token',
+    'wysiwyg' => 0,
+  ));
+
+  // Media Browser Plus settings.
+  variable_set('media_wysiwyg_wysiwyg_allowed_types', array('image', 'video', 'audio', 'document'));
+  variable_set('media_wysiwyg_wysiwyg_browser_plugins', array('upload', 'media_browser_plus--media_browser_thumbnails', 'media_browser_plus--media_browser_my_files'));
+
+  // Linkit WSYIWYG Profile.
+  $linkit_wysiwyg_default = array(
+    'name' => 'wysiwyg_default',
+    'admin_title' => 'WYSIWYG Default',
+    'admin_description' => 'Default wysiwyg configuration',
+    'profile_type' => 1,
+    'data' => serialize(array(
+        'text_formats' => array(
+          'full_html' => 'full_html',
+          'plain_text' => 0,
+        ),
+        'search_plugins' => array(
+          'entity:taxonomy_term' => array(
+            'enabled' => 0,
+            'weight' => '-10',
+          ),
+          'entity:node' => array(
+            'enabled' => 1,
+            'weight' => '-10',
+          ),
+          'entity:file' => array(
+            'enabled' => 1,
+            'weight' => '-10',
+          ),
+          'entity:user' => array(
+            'enabled' => 0,
+            'weight' => '-10',
+          ),
+        ),
+        'entity:node' => array(
+          'result_description' => '[node:title] - [node:content-type] - [node:nid] (nid)',
+          'include_unpublished' => 0,
+        ),
+        'entity:file' => array(
+          'result_description' => '',
+          'bundles' => array(
+            'document' => 'document',
+            'image' => 0,
+            'video' => 0,
+            'audio' => 0,
+          ),
+          'group_by_bundle' => 0,
+          'show_scheme' => 0,
+          'group_by_scheme' => 0,
+          'url_type' => 'download',
+          'image_extra_info' => array(
+            'thumbnail' => 'thumbnail',
+            'dimensions' => 'dimensions',
+          ),
+        ),
+        'entity:taxonomy_term' => array(
+          'result_description' => '',
+        ),
+        'entity:user' => array(
+          'result_description' => '',
+        ),
+        'insert_plugin' => array(
+          'url_method' => '3',
+        ),
+        'attribute_plugins' => array(
+          'class' => array(
+            'enabled' => 1,
+            'weight' => '-10',
+          ),
+          'id' => array(
+            'enabled' => 0,
+            'weight' => '-10',
+          ),
+          'target' => array(
+            'enabled' => 1,
+            'weight' => '-10',
+          ),
+          'title' => array(
+            'enabled' => 1,
+            'weight' => '-10',
+          ),
+          'accesskey' => array(
+            'enabled' => 0,
+            'weight' => '-10',
+          ),
+          'rel' => array(
+            'enabled' => 1,
+            'weight' => '-10',
+          ),
+        ),
+        'autocomplete' => array(
+          'charLimit' => '3',
+          'wait' => '350',
+          'remoteTimeout' => '10000',
+        ),
+      )
+    ),
+  );
+  db_insert('linkit_profiles')->fields($linkit_wysiwyg_default)->execute();
+
+  // Linkit Field Profile.
+  $linkit_field_default = array(
+    'name' => 'field_default',
+    'admin_title' => 'Field Default',
+    'admin_description' => 'Default linkit profile for fields.',
+    'profile_type' => 2,
+    'data' => serialize(array(
+      'search_plugins' => array(
+        'entity:taxonomy_term' => array(
+          'enabled' => 1,
+          'weight' => '-10',
+        ),
+        'entity:node' => array(
+          'enabled' => 1,
+          'weight' => '-10',
+        ),
+        'entity:file' => array(
+          'enabled' => 1,
+          'weight' => '-10',
+        ),
+        'entity:user' => array(
+          'enabled' => 0,
+          'weight' => '-10',
+        ),
+      ),
+      'entity:node' => array(
+        'result_description' => '[node:title] - [node:content-type] - [node:nid] (nid)',
+        'include_unpublished' => 1,
+      ),
+      'entity:file' => array(
+        'result_description' => '',
+        'bundles' => array(
+          'image' => 'image',
+          'video' => 'video',
+          'audio' => 'audio',
+          'document' => 'document',
+        ),
+        'group_by_bundle' => 0,
+        'show_scheme' => 0,
+        'group_by_scheme' => 0,
+        'url_type' => 'direct',
+        'image_extra_info' => array(
+          'thumbnail' => 'thumbnail',
+          'dimensions' => 'dimensions',
+        ),
+      ),
+      'entity:taxonomy_term' => array(
+        'result_description' => '[term:name] - [term:tid] (tid)',
+      ),
+      'entity:user' => array(
+        'result_description' => '',
+      ),
+      'insert_plugin' => array(
+        'plugin' => 'raw_url',
+        'url_method' => '1',
+      ),
+      'attribute_plugins' => array(
+        'class' => array(
+          'enabled' => 0,
+          'weight' => '-10',
+        ),
+        'id' => array(
+          'enabled' => 0,
+          'weight' => '-10',
+        ),
+        'target' => array(
+          'enabled' => 0,
+          'weight' => '-10',
+        ),
+        'title' => array(
+          'enabled' => 0,
+          'weight' => '-10',
+        ),
+        'accesskey' => array(
+          'enabled' => 0,
+          'weight' => '-10',
+        ),
+        'rel' => array(
+          'enabled' => 0,
+          'weight' => '-10',
+        ),
+      ),
+      'autocomplete' => array(
+        'charLimit' => '3',
+        'wait' => '350',
+        'remoteTimeout' => '10000',
+      ),
+    )),
+  );
+  db_insert('linkit_profiles')->fields($linkit_field_default)->execute();
+
+  // Backup and Migrate Settings.
+  $settings_dir = __DIR__;
+  $drupal_root = dirname(dirname($settings_dir));
+  $app_name = getenv('APP_NAME');
+  if ($app_name === FALSE) {
+    $app_name = strtolower(basename($drupal_root));
+    $app_name = preg_replace('/[^a-zA-Z0-9\-]+/', '_', $app_name);
+  }
+  // BAM Destination.
+  db_insert('backup_migrate_destinations')->fields(array(
+    'machine_name' => $app_name . '_s3',
+    'name' => $app_name . ' S3',
+    'subtype' => 's3',
+    'location' => 'https://CHANGEMETOCLIENTSKEY@s3.amazonaws.com/client-backups/production',
+    'settings' => serialize(array()),
+  ))->execute();
+
+  // BAM Settings Profile.
+  db_insert('backup_migrate_profiles')->fields(array(
+    'machine_name' => $app_name . '_s3_settings_profile',
+    'name' => $app_name . ' S3 Settings Profile',
+    'filename' => '[site:name]',
+    'append_timestamp' => 1,
+    'timestamp_format' => 'Y-m-d\TH-i-s',
+    'filters' => serialize(array(
+      'compression' => 'gzip',
+      'notify_success_enable' => 0,
+      'notify_success_email' => 'admin@def.dev',
+      'notify_failure_enable' => 0,
+      'notify_failure_email' => 'admin@def.dev',
+      'utils_site_offline' => 0,
+      'utils_site_offline_message' => $app_name . ' is currently under maintenance. We should be back shortly. Thank you for your patience.',
+      'utils_description' => '',
+      'use_cli' => 0,
+      'ignore_errors' => 0,
+      'sources' => array(
+        'db' => array(
+          'exclude_tables' => array(),
+          'nodata_tables' => array(
+            'cache' => 'cache',
+            'cache_admin_menu' => 'cache_admin_menu',
+            'cache_block' => 'cache_block',
+            'cache_bootstrap' => 'cache_bootstrap',
+            'cache_field' => 'cache_field',
+            'cache_filter' => 'cache_filter',
+            'cache_form' => 'cache_form',
+            'cache_image' => 'cache_image',
+            'cache_menu' => 'cache_menu',
+            'cache_page' => 'cache_page',
+            'cache_path' => 'cache_path',
+            'cache_views' => 'cache_views',
+            'cache_views_data' => 'cache_views_data',
+            'search_dataset' => 'search_dataset',
+            'search_index' => 'search_index',
+            'search_total' => 'search_total',
+            'sessions' => 'sessions',
+            'watchdog' => 'watchdog',
+          ),
+          'utils_lock_tables' => 0,
+        ),
+        'files' => array(
+          'exclude_filepaths' => "backup_migrate\nstyles\ncss\njs\nctools\nless\ncivicrm/templates_c",
+        ),
+        'archive' => array(
+          'exclude_filepaths' => "public://backup_migrate\npublic://styles\npublic://css\npublic://js\npublic://ctools\npublic://less\nsites/default/settings.php\n/tmp",
+        ),
+      ),
+    )),
+  ))->execute();
+
+  // BAM DB Schedule.
+  db_insert('backup_migrate_schedules')->fields(array(
+    'machine_name' => $app_name . '_db_backup',
+    'name' => $app_name . ' DB Backup',
+    'source_id' => 'db',
+    'destination_id' => $app_name . '_s3',
+    'copy_destination_id' => '',
+    'profile_id' => $app_name . '_s3_settings_profile',
+    'keep' => 56,
+    'period' => 86400,
+    'enabled' => 1,
+    'cron' => 'builtin',
+    'cron_schedule' => '0 4 * * *',
+  ))->execute();
+
+  // BAM Files Schedule.
+  db_insert('backup_migrate_schedules')->fields(array(
+    'machine_name' => $app_name . '_files_backup',
+    'name' => $app_name . ' Files Backup',
+    'source_id' => 'files',
+    'destination_id' => $app_name . '_s3',
+    'copy_destination_id' => '',
+    'profile_id' => $app_name . '_s3_settings_profile',
+    'keep' => 56,
+    'period' => 86400,
+    'enabled' => 1,
+    'cron' => 'builtin',
+    'cron_schedule' => '0 4 * * *',
+  ))->execute();
+
+  // Search API DB Server
+  $search_api_server_options = array(
+    'database' => 'default:default',
+    'min_chars' => 1,
+    'partial_matches' => 0,
+  );
+  $search_api_server_values = array(
+    'name' => 'MySQL',
+    'machine_name' => 'mysql',
+    'enabled' => 1,
+    'description' => '',
+    'class' => 'search_api_db_service',
+    'options' => serialize($search_api_server_options),
+  );
+  db_insert('search_api_server')
+    ->fields($search_api_server_values)
+    ->execute();
+
+  // Turn cron off by default.
+  variable_set('cron_safe_threshold', 0);
+
+  // Enable Zen.
+  theme_enable(array('zen'));
+}
